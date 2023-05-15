@@ -1,0 +1,96 @@
+<%-include('./cabecalho.ejs')%>
+
+  <!-- food section -->
+
+  <section class="layout">
+    <div class="container">
+      <div class="cabecalho">
+      </div>
+      <div class="page-wrapper bg-dark p-t-100 p-b-50">
+        <div class="wrapper wrapper--w900">
+            <div class="card card-6">
+                <div class="card-heading">
+                    <h2 class="title">Adicionar no cardápio</h2>
+                </div>
+                <div class="card-body">
+                    <form id="demo-form2" method="post" enctype="multipart/form-data" data-parsley-validate
+                            class="form-horizontal form-label-left">
+                            <div class="item form-group">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
+
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <img class="img-circle img-fluid" id="blah" src="#" alt="your image"
+                                        style="max-width: 100%;" hidden />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Foto
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <input type="file" id="fotoupload" class="form-control-file" required="required"
+                                        name="foto">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Titulo
+                                    <span class="required">*</span>
+                                </label> 
+                                <div class="col-md-9 col-sm-9 ">
+                                    <textarea class="textarea--style-6" required="required" name="titulo"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                              <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Descrição
+                                  <span class="required">*</span>
+                              </label> 
+                              <div class="col-md-9 col-sm-9 ">
+                                  <textarea class="textarea--style-6" required="required" name="descricao"></textarea>
+                              </div>
+                          </div>
+                            <div class="form-row">
+                              <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Selecionar categoria
+                                  <span class="required">*</span>
+                              </label> 
+                              <div class="col-md-9 col-sm-9 ">
+                                <select name="tipo" id="cars">
+                                  <option value="hamburguer">Hamburguer</option>
+                                  <option value="porções">Porções</option>
+                                  <option value="bebidas">Bebidas</option>
+
+                              </select>
+                              </div>
+                          </div>
+
+                            <div class="form-row">
+                                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Valor R$
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-9 col-sm-9 ">
+                                  <input type="number" class="textarea--style-6" required="required"
+                                  name="valor">
+                                </div>
+                            </div>
+
+
+
+                            <div class="ln_solid"></div>
+                            <div class="item form-group">
+                                <div class="col-md-6 col-sm-6 offset-md-3">
+                                    <input type="reset" class="btn btn-primary" type="reset" value="Limpar">
+                                    <input type="submit" class="btn btn-success" href="/menu" value="Enviar">
+
+                                </div>
+                            </div>
+                        </form>
+                </div>     
+            </div>
+            
+    </div>
+    </div>
+  </section>
+
+  <!-- end food section -->
+
+  <%-include('./rodape.ejs')%>

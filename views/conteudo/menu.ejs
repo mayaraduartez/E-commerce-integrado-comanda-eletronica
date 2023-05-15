@@ -1,0 +1,65 @@
+<%-include('./cabecalho.ejs')%>
+
+  <!-- food section -->
+
+  <section class="food_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          Cardápio
+        </h2>
+      </div>
+
+      <ul class="filters_menu">
+        <li class="active" data-filter="*">Todos</li>
+        <li data-filter=".hamburguer">Hamburguer's</li>
+        <li data-filter=".porções">Porções</li>
+        <li data-filter=".bebidas">Bebidas</li>
+        
+
+      </ul>
+
+      
+      <div class="filters-content">
+        <div class="row grid">
+          <%Cardapio.forEach(function(cardapio){%>
+          <div class="col-sm-6 col-lg-4 all <%=cardapio.tipo%>">
+            <div class="box">
+              <div>
+                <div class="img-box">
+                  <img src="images/<%=cardapio.foto%>" height="100%" alt="">
+                </div>
+                <div class="detail-box">
+                  <h5>
+                    <%=cardapio.titulo%>
+                  </h5>
+                  <p>
+                    
+                  <div class="options">
+                    <h6>R$
+                      <%=cardapio.valor.toFixed(2)%>
+                    </h6>
+                    <a href="/carrinho/add/<%=cardapio.id%>">
+                      <button  class="button">+</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          <% }) %>
+          
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          Inicio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- end food section -->
+
+  <%-include('./rodape.ejs')%>
