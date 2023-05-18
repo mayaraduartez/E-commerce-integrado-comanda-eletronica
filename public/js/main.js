@@ -1,6 +1,6 @@
 const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
-  var elemento = document.getElementById("idenviar");
+  var elemento = document.getElementById("idenviar", "criarusuario");
   if (elemento){
   event.preventDefault();
   var password = document.getElementById("senha");
@@ -27,4 +27,19 @@ form.addEventListener("submit", (event) => {
     }
   }
 }
+});
+
+
+var senha = document.getElementById('senha');
+var olho= document.getElementById("olho")
+
+olho.addEventListener('mousedown', function() {
+  senha.setAttribute("type", "text");
+  console.log('mouseover');
+});
+
+
+olho.addEventListener('mouseup', function() {
+  senha.setAttribute("type", "password");
+  console.log('mouseout');
 });
