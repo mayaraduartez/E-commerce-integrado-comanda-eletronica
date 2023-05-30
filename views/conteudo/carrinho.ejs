@@ -8,46 +8,35 @@
         <h2>
           Meu Carrinho
         </h2>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Carrinho</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-         <div>
-          <form id="demo-form2" method="post" data-parsley-validate
-          class="form-horizontal form-label-left">
-            <table id="customers">
-              <tr>
-                <th>Item</th>
-                <th>Valor</th>
-                <th>Quantidade</th>
-                <th></th>
-              </tr>
-              <%Cardapio.forEach(function(cardapio){%>
-              <tr>
-                <td name="idpedido"><%=cardapio.titulo%></td>
-                <input type="hidden" name="idpedido"
-                  min="1" max="100" value="<%=cardapio.id%>">
-                <td name="valordoitem" >R$ <%=cardapio.valor%></td>
-                <input type="hidden"name="valorpedido"
-                  min="1" max="100" value="<%=cardapio.valor%>">
-                <td><input type="number"  value="1" name="quantidade"
-                  min="1" max="100"></td>
-                <td>
-                  <a href="" class="user_link">
-                      <i class="fa fa-trash can" aria-hidden="true"></i>
-                    </a>
-                  </td>
-              </tr>
-            <%})%>
-            </table>
-         </div>
-        </tbody>
-      </table>  
+        <div class="carrinho">
+          <ul class="lista-compras">
+            <li>
+              <span class="item">Item 1</span>
+              <span class="valor">R$ 10,00</span>
+              <span class="quantidade">x 2</span>
+              <span class="total">R$ 20,00</span>
+              <button class="btn-apagar"><i class="fas fa-trash-alt"></i></button>
+            </li>
+            <li>
+              <span class="item">Item 2</span>
+              <span class="valor">R$ 15,00</span>
+              <span class="quantidade">x 1</span>
+              <span class="total">R$ 15,00</span>
+              <button class="btn-apagar"><i class="fas fa-trash-alt"></i></button>
+            </li>
+            <li>
+              <span class="item">Item 3</span>
+              <span class="valor">R$ 5,00</span>
+              <span class="quantidade">x 3</span>
+              <span class="total">R$ 15,00</span>
+              <button class="btn-apagar"><i class="fas fa-trash-alt"></i></button>
+            </li>
+          </ul>
+          <div class="total-carrinho">
+            <span class="label">Total do Carrinho:</span>
+            <span class="valor-total">R$ 50,00</span>
+          </div>
+        </div>
       </div>
       <div class="btn-box">
          <input type="submit" class="btn btn-success" href="/meuspedidos" value="Confirmar">
@@ -55,6 +44,7 @@
     </form>
     </div>
   </section>
+  <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
 
   <!-- end food section -->
 

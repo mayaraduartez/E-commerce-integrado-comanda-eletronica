@@ -39,7 +39,7 @@ async function recuperar(req,res) {
 
     let token = generatePassword();
 
-console.log("o email eh: " + req.body.email);
+    console.log("o email eh: " + req.body.email);
     if(req.body.email == "") {
       res.render('login/forgot.ejs', {msg: 'Você deve informar um email!'})
     }
@@ -53,12 +53,14 @@ console.log("o email eh: " + req.body.email);
         if(!usuario ){
           res.render('login/forgot.ejs', {msg: 'Usuário não cadastrado!'})
         }
+        console.log(usuario.id)
 
         let savetoken = await Token.create({
-        UsuarioId: usuario.UsuarioId,
+        UsuarioId: usuario.id,
         token: token,
         dataexpiracao: new Date()
         });
+        console.log(token)
 
         const email = {
         from: 'recuperacaodesenhaif@hotmail.com',

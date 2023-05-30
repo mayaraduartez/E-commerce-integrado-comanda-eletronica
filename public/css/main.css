@@ -151,7 +151,7 @@ iframe {
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
 
-.limiter {
+.limitador {
   width: 100%;
   margin: 0 auto;
 }
@@ -299,7 +299,7 @@ iframe {
 
 .olho {
   cursor: pointer;
-  left: 160px;
+  left: 80%;
   position: absolute;
   width: 20px;
 }

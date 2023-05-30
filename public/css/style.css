@@ -11101,5 +11101,88 @@ a.text-dark:hover, a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+
+  .carrinho {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #f6f6f6;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .lista-compras {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .lista-compras li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .item {
+    flex: 1;
+    font-weight: bold;
+  }
+  
+  .valor {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .quantidade {
+    font-size: 14px;
+    color: #666;
+    margin-left: 10px;
+  }
+  
+  .total {
+    font-size: 16px;
+    color: #ff8800;
+  }
+  
+  .btn-apagar {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-apagar i {
+    color: #ff8800;
+  }
+  
+  .total-carrinho {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .valor-total {
+    font-weight: bold;
+    color: #ff8800;
+    font-size: 18px;
+  }
+  
+  .btn-confirmar {
+    background-color: #ff8800;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+  
 }
 /*# sourceMappingURL=bootstrap.css.map */
