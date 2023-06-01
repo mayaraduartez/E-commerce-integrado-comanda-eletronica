@@ -23,6 +23,8 @@ router.post("/forgot", loginController.recuperar);
 
 router.get("/token", loginController.telatoken);
 
+router.post("/token", loginController.atualizarsenha)
+
 router.get("/", principalController.principal);
 
 router.get("/meuspedidos", principalController.pedidos);

@@ -7,7 +7,7 @@ const Token = conexao.define(
     token: {
       type: DataTypes.STRING,
     },
-    dataexpiracao: {
+    datacriacao: {
         type: DataTypes.DATE,
     },
   },

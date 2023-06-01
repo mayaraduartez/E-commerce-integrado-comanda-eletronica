@@ -35,11 +35,24 @@ async function telatoken(req,res) {
 res.render("login/token.ejs");
 }
 
+async function atualizarsenha(req,res) {
+  var token = req.body.token;
+  let usuario = await Usuario.findOne({
+    where: {
+    email: req.body.email
+    }
+    })
+
+  if(token == usuario.token){
+    //cmd de update da senha
+  }
+  else{
+    res.render('login/token.ejs', {msg: 'O token não está correto!'})
+  }
+}
+
 async function recuperar(req,res) {
-
-    let token = generatePassword();
-
-    console.log("o email eh: " + req.body.email);
+    let token = generatePassword(); //??
     if(req.body.email == "") {
       res.render('login/forgot.ejs', {msg: 'Você deve informar um email!'})
     }
@@ -48,6 +61,7 @@ async function recuperar(req,res) {
         where: {
         email: req.body.email
         }
+
         })
 
         if(!usuario ){
@@ -57,8 +71,8 @@ async function recuperar(req,res) {
 
         let savetoken = await Token.create({
         UsuarioId: usuario.id,
-        token: token,
-        dataexpiracao: new Date()
+        token: token,//??
+        datacriacao: new Date()
         });
         console.log(token)
 
@@ -85,10 +99,12 @@ pass += chars.charAt(Math.random() * 61)
 return pass
 }
 
+
+
 const logar = passport.authenticate("local", {
 failureRedirect: "/login", 
 successRedirect: "/addmenu",
 });
 
 
-module.exports = { abreTela, cadastro, cadastrar, logar, forgot, recuperar, telatoken};
+module.exports = { abreTela, cadastro, cadastrar, logar, forgot, recuperar, telatoken, atualizarsenha};

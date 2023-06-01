@@ -53,10 +53,20 @@
             >
               <input
                 class="input100"
-                type="token"
-                name="token"
-                placeholder="Digite aqui"
+                type="email"
+                name="email"
+                placeholder="Digite aqui seu email"
               />
+
+              <span class="focus-input100"></span>
+              <span class="symbol-input100">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+              </span>
+            </div>
+
+            <span class="login10-form-title">Token recebido:</span>
+            <div class="wrap-input100 validate-input" data-validate="Digite aqui">
+              <input class="input100" type="text" name="token" placeholder="Digite aqui">
               <span class="focus-input100"></span>
               <span class="symbol-input100">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -109,6 +119,12 @@
             </div>
 
             <div></div>
+            <div class="mensagem" style="color: red; text-align: center;">
+              <% if(msg) {%>
+                <%= msg %>
+              <%}%>
+                
+                </div>
           </form>
           
         </div>
