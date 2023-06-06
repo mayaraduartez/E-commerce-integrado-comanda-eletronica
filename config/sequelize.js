@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const sequelizeconecta = new Sequelize(
-  "db_development",
+  "novo_db_development",
   "postgres",
   "postgres",
   {

@@ -1,7 +1,7 @@
 const sequelize = require("sequelize");
 
 const conexao = new sequelize(
-  "db_development",
+  "novo_db_development",
   "postgres",
   "postgres",
   {

@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "db_development",
+    "database": "novo_db_development",
     "host": "localhost",
     "port": "5432",
     "dialect": "postgres"

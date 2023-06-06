@@ -14,7 +14,8 @@ const usuario = await Usuario.create({
 nome: nome,
 email: email,
 senha: hash,
-});
+})
+console.log(usuario)
 res.redirect("/login");
 }
 
@@ -36,22 +37,28 @@ res.render("login/token.ejs", {msg:""});
 }
 
 async function atualizarsenha(req, res) {
-  var token = req.body.token;
   var novasenha = req.body.novasenha;
   let usuario = await Usuario.findOne({
     where: {
       email: req.body.email
     },
-    attributes: ['id', 'token'] 
+  });
+
+  let token = await Token.findOne({
+    where: {
+      token: req.body.token
+    }
   });
 
   console.log(usuario);
-  console.log('Token no banco de dados:', usuario.token);
-  console.log('Token fornecido na requisição:', token);
+  console.log(token);
+  console.log('Token fornecido na requisição:', token.UsuarioId);
 
-  if (usuario.token === token) {
+  if (token.UsuarioId === usuario.id) {
     // Comando de atualização da senha
-    usuario.senha = novasenha;
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(novasenha, salt);
+    usuario.senha = hash;
     await usuario.save();
     res.render('login/login.ejs');
   } else {

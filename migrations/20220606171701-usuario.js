@@ -9,17 +9,8 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
-      token: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "token",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
       nome: Sequelize.STRING,
-      email: { type: Sequelize.STRING, allowNull: false },
+      email: { type: Sequelize.STRING, allowNull: false, unique:true },
       senha: Sequelize.STRING,
       admin: { type: Sequelize.BOOLEAN, defaultValue: true }, 
     });

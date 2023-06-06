@@ -1,6 +1,6 @@
 const form = document.querySelector("form");
 form.addEventListener("submit", (event) => {
-  var elemento = document.getElementById("cadastro");
+  var elemento = document.getElementById("cadastr");
   if (elemento){
   event.preventDefault();
   var password = document.getElementById("senha");
