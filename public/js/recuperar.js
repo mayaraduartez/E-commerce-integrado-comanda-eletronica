@@ -3,8 +3,8 @@ form.addEventListener("submit", (event) => {
   var elemento = document.getElementById("idenviar");
   if (elemento){
   event.preventDefault();
-  var password = document.getElementById("senha");
-  var confirm_password = document.getElementById("isenha");
+  var password = document.getElementById("novasenha");
+  var confirm_password = document.getElementById("senha");
   var regex =
     /^(?=(?:.*?[A-Z]){1})(?=(?:.*?[0-9]){1})(?=(?:.*?[!@#$%*()_+^&}{:;?.]){1})(?!.*\s)[0-9a-zA-Z!@#$%;*(){}_+^&]*$/;
 

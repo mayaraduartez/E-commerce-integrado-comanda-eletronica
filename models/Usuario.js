@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const conexao = require("../config/sequelize"); //importo sequelize.js
+const conexao = require("../config/sequelize");
 
 const Usuario = conexao.define(
   "Usuario",
@@ -14,13 +14,13 @@ const Usuario = conexao.define(
     senha: {
       type: DataTypes.STRING,
     },
-    admin:{
+    admin: {
       type: DataTypes.BOOLEAN,
-    }
+    },
   },
   {
-    timestamps: false, //não cria o createdat e updatedat
-    tableName: "usuarios", //nome da tabela que o usuario vai estar ligado
+    timestamps: false,
+    tableName: "usuarios",
   }
 );
 

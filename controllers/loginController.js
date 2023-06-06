@@ -32,27 +32,35 @@ res.render("login/forgot.ejs" , {msg:""});
 }
 
 async function telatoken(req,res) {
-res.render("login/token.ejs");
+res.render("login/token.ejs", {msg:""});
 }
 
-async function atualizarsenha(req,res) {
+async function atualizarsenha(req, res) {
   var token = req.body.token;
+  var novasenha = req.body.novasenha;
   let usuario = await Usuario.findOne({
     where: {
-    email: req.body.email
-    }
-    })
+      email: req.body.email
+    },
+    attributes: ['id', 'token'] 
+  });
 
-  if(token == usuario.token){
-    //cmd de update da senha
-  }
-  else{
-    res.render('login/token.ejs', {msg: 'O token não está correto!'})
+  console.log(usuario);
+  console.log('Token no banco de dados:', usuario.token);
+  console.log('Token fornecido na requisição:', token);
+
+  if (usuario.token === token) {
+    // Comando de atualização da senha
+    usuario.senha = novasenha;
+    await usuario.save();
+    res.render('login/login.ejs');
+  } else {
+    res.render('login/token.ejs', { msg: 'O token não está correto!' });
   }
 }
 
 async function recuperar(req,res) {
-    let token = generatePassword(); //??
+
     if(req.body.email == "") {
       res.render('login/forgot.ejs', {msg: 'Você deve informar um email!'})
     }
@@ -67,29 +75,46 @@ async function recuperar(req,res) {
         if(!usuario ){
           res.render('login/forgot.ejs', {msg: 'Usuário não cadastrado!'})
         }
-        console.log(usuario.id)
+        else if(usuario.token === "" || usuario.token === null){
+          let token = generatePassword();
 
-        let savetoken = await Token.create({
-        UsuarioId: usuario.id,
-        token: token,//??
-        datacriacao: new Date()
+
+          let savetoken = await Token.create({
+          UsuarioId: usuario.id,
+          token: token,
+          datacriacao: new Date()
         });
-        console.log(token)
 
-        const email = {
-        from: 'recuperacaodesenhaif@hotmail.com',
-        to: usuario.email,
-        subject: 'Recuperação de senha!',
-        text: 'Olá '+usuario.nome+' você tentou recuperar a senha pelo site! acesse o site http://localhost:3002/recuperacao e insira o token: '+token+''
-        };
-        console.log(email)
+        console.log(token);
 
-        transporter.sendMail(email, (err, result)=>{
-        if(err) return console.log("Oi")
-        })
-        res.redirect("/token");
+        enviaremail(usuario,token);
+          res.redirect("/token");
+
+        } 
+        else {
+          await Token.destroy({
+            where: {
+              UsuarioId: usuario.id
+            }
+          });
+
+          let token = generatePassword();
+
+            let savetoken = await Token.create({
+            UsuarioId: usuario.id,
+            token: token,
+            datacriacao: new Date()
+          });
+          
+          enviaremail(usuario,token);
+            res.redirect("/token");
+        }
+
+        
     }
  }
+
+
 
 function generatePassword(){
 const chars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -99,6 +124,18 @@ pass += chars.charAt(Math.random() * 61)
 return pass
 }
 
+function enviaremail(usuario,token){
+  const email = {
+    from: 'recuperacaodesenhaif@hotmail.com',
+    to: usuario.email,
+    subject: 'Recuperação de senha!',
+    text: 'Olá '+usuario.nome+' você tentou recuperar a senha pelo site! acesse o site http://localhost:3002/recuperacao e insira o token: '+ token +''
+    };
+
+    transporter.sendMail(email, (err, result)=>{
+    if(err) return console.log(err)
+    })
+}
 
 
 const logar = passport.authenticate("local", {
