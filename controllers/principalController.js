@@ -123,8 +123,23 @@ const Pedido = require("../models/Pedido");
   };
 
   async function pedidos(req, res) {
-    const pedidos = await Pedido.findAll({ include: [ { all: true } ] },{where:{UsuarioId: req.user.id}})
-    console.log(pedidos)
+    const pedidos = await Pedido.findAll({
+      include: [
+        {
+          model: Itens,
+          include: [
+            {
+              model: Cardapio,
+            },
+          ],
+        },
+      ],
+      where: {
+        UsuarioId: req.user.id,
+      },
+      order: [['id', 'DESC']], // Ordenar por ID em ordem decrescente
+    });
+    
     res.render('conteudo/meuspedidos',{ Pedidos:pedidos })
     
   }

@@ -1,59 +1,44 @@
 <%-include('./cabecalho.ejs')%>
 
-  <!-- food section -->
+<!-- food section -->
 
-  <section class="food_section layout_padding">
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Meus Pedidos
-        </h2>
-      </div>
+<section class="food_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Meus Pedidos</h2>
+    </div>
 
-      <div class="filters-content">
+    <div class="filters-content">
+      <div class="row grid">
         <%Pedidos.forEach(function(pedido){%>
-        <div class="row grid">
-          
-          <div class="col-sm-6 col-lg-4 all pizza">
-            <div class="box">
-              <div>
-                
-                <div class="detail-box">
-                  <h5>
-                    <%=pedido.datapedido%>
-                  </h5>
-                  <p>
-                    <%pedido.Itens.forEach(function(item){%>
-  
-                      <%=item.quantidade%> X <%=item.titulo%><br>
-                     
-                    <%})%>
-                  </p>
-                  <div class="options">
-                    <h6> Total R$: <%=pedido.valortotal%> <br>
-                    </h6>
-                    <h1>
-                      <%=pedido.situacao%>
-                    </h1>
-                    
-                   
-                  </div>
+        <div class="col-sm-6 col-lg-4 all pizza">
+          <div class="box">
+            <div>
+              <div class="detail-box">
+                <h5><%=pedido.datapedido%></h5>
+                <p>
+                  <%pedido.Itens.forEach(function(item){%> <%=item.quantidade%>
+                  X <%=item.Cardapio.titulo%><br />
+
+                  <%})%>
+                </p>
+                <div class="options">
+                  <h6>Total R$: <%=pedido.valortotal%> <br /></h6>
+                  <h1><%=pedido.situacao%></h1>
                 </div>
               </div>
             </div>
           </div>
-          
         </div>
         <%})%>
       </div>
-      <div class="btn-box">
-        <a href="">
-          Inicio
-        </a>
-      </div>
     </div>
-  </section>
+    <div class="btn-box">
+      <a href=""> Inicio </a>
+    </div>
+  </div>
+</section>
 
-  <!-- end food section -->
+<!-- end food section -->
 
-  <%-include('./rodape.ejs')%>
+<%-include('./rodape.ejs')%>

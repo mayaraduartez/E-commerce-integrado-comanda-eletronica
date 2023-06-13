@@ -17,7 +17,7 @@
         </tr>
         <% Cardapio.forEach(function(cardapio) { %>
         <tr>
-          <td class="item-name"><%= cardapio.titulo %></td>
+          <td class="item-name" name="titulo"><%= cardapio.titulo %></td>
           <input
             type="hidden"
             name="idpedido"
