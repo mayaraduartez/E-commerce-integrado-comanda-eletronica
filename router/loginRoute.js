@@ -9,32 +9,45 @@ const autenticacaoadmin = require("../config/autenticacaoadmin");
 
 
 //abrir a tela de login e cadastro
-router.get("/login", loginController.abreTela);
+router.get("/login", 
+loginController.abreTela);
 
-router.get("/cadastro", loginController.cadastrar);
+router.get("/cadastro", 
+loginController.cadastrar);
 
-router.post("/cadastro", loginController.cadastro);
+router.post("/cadastro", 
+loginController.cadastro);
 
-router.post("/login", loginController.logar);
+router.post("/login", 
+loginController.logar);
 
-router.get("/forgot", loginController.forgot);
+router.get("/forgot", 
+loginController.forgot);
 
-router.post("/forgot", loginController.recuperar);
+router.post("/forgot", 
+loginController.recuperar);
 
-router.get("/token", loginController.telatoken);
+router.get("/token", 
+loginController.telatoken);
 
-router.post("/token", loginController.atualizarsenha)
+router.post("/token", 
+loginController.atualizarsenha)
 
-router.get("/", principalController.principal);
+router.get("/", 
+principalController.principal);
 
-router.get("/meuspedidos", principalController.pedidos);
+router.get("/abreinicial", 
+principalController.abreinicial);
 
-router.get("/carrinho", principalController.abrecarrinho);
+router.get("/meuspedidos", 
+principalController.pedidos);
+
+router.get("/carrinho", 
+principalController.abrecarrinho);
 
 router.get("/menu", 
 autenticacao,
 principalController.menu,
-
 );
 
 router.get("/addmenu", 
@@ -42,7 +55,10 @@ autenticacaoadmin,
 principalController.addmenu,
 );
 
-router.post("/addmenu", autenticacaoadmin, upload.single('foto'), principalController.criarmenu)
+router.post("/addmenu", 
+autenticacaoadmin, 
+upload.single('foto'), 
+principalController.criarmenu)
 
 router.get("/addpromocao", 
 autenticacaoadmin,
@@ -53,11 +69,10 @@ router.get("/carrinho/add/:id",
 principalController.addcarrinho,
 );
 
-router.post("/carrinho", principalController.salvaritens);
+router.post("/carrinho", 
+principalController.salvaritens);
 
-
-
-
+router.get('/carrinho/remove/:id', principalController.removeCarrinho);
 
 
 

@@ -5,10 +5,10 @@ var LocalStrategy = require("passport-local"); //importei a estratégia de login
 
 passport.use(
   new LocalStrategy(async function (username, password, cb) {
-    console.log(username + " " + password)
+    
     //ta recebendo o usuario e a senha q foi digitado para retornar (cb: função de resposta)
     var usuario = await Usuario.findOne({ where: { email: username } });
-    console.log(usuario)
+    
     //verificando se o usuario está do bd, com o find
     if (!usuario) {
       return cb(null,false, { message: "Usuario não existe!" }); //não teve resultado

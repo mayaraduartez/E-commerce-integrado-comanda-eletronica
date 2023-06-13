@@ -15,7 +15,7 @@ nome: nome,
 email: email,
 senha: hash,
 })
-console.log(usuario)
+
 res.redirect("/login");
 }
 
@@ -50,9 +50,7 @@ async function atualizarsenha(req, res) {
     }
   });
 
-  console.log(usuario);
-  console.log(token);
-  console.log('Token fornecido na requisição:', token.UsuarioId);
+  
 
   if (token.UsuarioId === usuario.id) {
     // Comando de atualização da senha
@@ -61,8 +59,8 @@ async function atualizarsenha(req, res) {
     usuario.senha = hash;
     await usuario.save();
     res.render('login/login.ejs');
-  } else {
-    res.render('login/token.ejs', { msg: 'O token não está correto!' });
+  } else if(token.UsuarioId != usuario.id){
+    res.render('login/token.ejs', { msg: 'O token está incorreto!' });
   }
 }
 
@@ -92,7 +90,7 @@ async function recuperar(req,res) {
           datacriacao: new Date()
         });
 
-        console.log(token);
+        
 
         enviaremail(usuario,token);
           res.redirect("/token");

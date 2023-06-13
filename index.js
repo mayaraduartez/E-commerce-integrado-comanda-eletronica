@@ -1,4 +1,5 @@
 const express = require("express");
+const methodOverride = require("method-override");
 const app = express();
 const path = require("path");
 const porta = process.env.PORT || 3002;
@@ -30,6 +31,7 @@ app.set("view engine", "ejs");
 
 //configurar para receber dados por metodo post
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride("_method"));
 
 //pasta de arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));

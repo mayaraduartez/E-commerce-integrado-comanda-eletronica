@@ -9,13 +9,16 @@ const Pedido = require("../models/Pedido");
     res.render("conteudo/principal.ejs");
   }
 
+  async function abreinicial(req,res){
+    res.render("admin/principal.ejs");
+  }
+
   async function menu(req, res) {
     const cardapio = await Cardapio.findAll({
       
     }).catch(function (err) {
       console.log(err)
     });
-    console.log(cardapio)
     res.render("conteudo/menu", { Cardapio: cardapio });
   }
 
@@ -35,10 +38,11 @@ const Pedido = require("../models/Pedido");
   }
 
   async function criarmenu(req, res){
-    console.log("Criarmenu")
+    
     const cardapio = await Cardapio.create({
       foto: req.file.filename,
       titulo: req.body.titulo,
+      descricao: req.body.descricao,
       valor: req.body.valor,
       tipo: req.body.tipo,
     }).catch(err=>{
@@ -70,6 +74,25 @@ const Pedido = require("../models/Pedido");
     res.render("conteudo/carrinho.ejs", {Cardapio:cardapio});
   }
 
+  async function removeCarrinho(req, res) {
+    const elementoId = req.params.id;
+    console.log(req.params.id)
+    if (!req.session.carrinho) {
+      req.session.carrinho = [];
+    }
+  
+    // Encontre o índice do elemento no carrinho
+    const index = req.session.carrinho.indexOf(elementoId);
+  
+    if (index !== -1) {
+      // Remova o elemento do carrinho
+      req.session.carrinho.splice(index, 1);
+    }
+  
+    res.redirect('/carrinho')
+  }
+  
+
   async function salvaritens(req, res){
     
     const pedidos = await Pedido.create({
@@ -89,8 +112,9 @@ const Pedido = require("../models/Pedido");
         PedidoId: pedidos.id,
         
       }).catch(err=>{
-        
+        console.log(err)
       });
+      console.log(itens)
       pedidos.valortotal = pedidos.valortotal + (itens.valordoitem*itens.quantidade)
     }
     await pedidos.save()
@@ -109,6 +133,7 @@ const Pedido = require("../models/Pedido");
 
   module.exports = { 
     principal,
+    abreinicial,
     menu, 
     pedidos, 
     abrecarrinho, 
@@ -116,5 +141,6 @@ const Pedido = require("../models/Pedido");
     addpromocao,
     criarmenu,
     addcarrinho,
+    removeCarrinho,
     salvaritens,
   };
