@@ -9,8 +9,17 @@ const Pedido = require("../models/Pedido");
     res.render("conteudo/principal.ejs");
   }
 
-  async function abreinicial(req,res){
-    res.render("admin/principal.ejs");
+  async function abreinicial(req, res) {
+    
+    const usuario = await Usuario.findOne({
+      where: {
+        id: req.user.id,
+      }
+    }).catch(function (err) {
+      console.log(err)
+    });
+  
+    res.render('conteudo/meuperfil', { Usuario: usuario});
   }
 
   async function menu(req, res) {
@@ -28,6 +37,9 @@ const Pedido = require("../models/Pedido");
     res.render("conteudo/meuspedidos.ejs");
   }
 
+  async function abreperfil(req,res){
+    res.render("conteudo/meuperfil.ejs");
+  }
 
   async function addmenu(req, res) {
     res.render("admin/addmenu.ejs");
@@ -150,7 +162,8 @@ const Pedido = require("../models/Pedido");
     principal,
     abreinicial,
     menu, 
-    pedidos, 
+    pedidos,
+    abreperfil,
     abrecarrinho, 
     addmenu,
     addpromocao,

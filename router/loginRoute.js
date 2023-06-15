@@ -42,6 +42,9 @@ principalController.abreinicial);
 router.get("/meuspedidos", 
 principalController.pedidos);
 
+router.get("/meuperfil",
+principalController.abreperfil);
+
 router.get("/carrinho", 
 principalController.abrecarrinho);
 

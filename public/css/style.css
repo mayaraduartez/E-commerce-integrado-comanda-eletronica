@@ -6,6 +6,81 @@ body {
   overflow-x: hidden;
 }
 
+.img-usuario {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #dfdfdf;
+}
+
+.profile_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.form_group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3399cc;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profile_picture {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_picture img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #dfdfdf;
+}
+
+.change_password_btn {
+  background-color: #87ceeb;
+  color: #000;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.update_profile_btn {
+  background-color: #87ceeb;
+  color: #000;
+  cursor: pointer;
+}
+
+
 #customers {
   margin: 0 auto; /* Centraliza a tabela horizontalmente */
   border-collapse: collapse; /* Remove espaçamentos entre as células */
@@ -41,7 +116,7 @@ body {
 
 
 .layout_padding {
-  padding: 90px 0;
+  padding: 4%;
 }
 
 .layout_padding2 {
@@ -219,6 +294,10 @@ a:focus {
   border-radius: 5px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+}
+
+.nav-link{
+  font-size: 13px;
 }
 
 .custom_nav-container .navbar-nav .nav-item:hover .nav-link, .custom_nav-container .navbar-nav .nav-item.active .nav-link {
