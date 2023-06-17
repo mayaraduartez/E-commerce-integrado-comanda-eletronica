@@ -12,23 +12,25 @@
       <div class="row grid">
         <%Pedidos.forEach(function(pedido){%>
         <div class="col-sm-6 col-lg-4 all pizza">
-          <div class="box">
+       
             <div>
-              <div class="detail-box">
-                <h5><%=pedido.datapedido%></h5>
-                <p>
-                  <%pedido.Itens.forEach(function(item){%> <%=item.quantidade%>
-                  X <%=item.Cardapio.titulo%><br />
+              <div class="pedido">
+                <h5 class="data-pedido"><%=pedido.datapedido%></h5>
+                <p class="item-pedido">
+                  <%pedido.Itens.forEach(function(item){%> <%=item.quantidade%> x <%=item.Cardapio.titulo%>
+                  <br />
 
                   <%})%>
                 </p>
-                <div class="options">
-                  <h6>Total R$: <%=pedido.valortotal%> <br /></h6>
-                  <h1><%=pedido.situacao%></h1>
+                <div class="valor-pedido">
+                  <h6 class="valor total">
+                    Total R$: <%=pedido.valortotal%> <br />
+                  </h6>
+                  <h1 class="situacao-pedido"><%=pedido.situacao%></h1>
                 </div>
               </div>
             </div>
-          </div>
+          
         </div>
         <%})%>
       </div>

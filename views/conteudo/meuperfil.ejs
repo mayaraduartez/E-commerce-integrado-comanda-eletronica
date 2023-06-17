@@ -7,52 +7,89 @@
       <h2>Meu Perfil</h2>
     </div>
 
-    <form class="profile_form">
-      <% Usuario.forEach(function(usuario) { %>
-        <div class="filters-content">
-            <div class="profile_picture">
-              <img src="/images/img.png" />
-            </div>
-            <input type="file" />
-          </div>
+    <form class="profile_form" method="post" enctype="multipart/form-data" data-parsley-validate>
+      <div class="filters-content">
+        <div class="profile_picture">
+          <% if (usuario.foto) { %>
+            <img id="preview_img" src="images/<%= usuario.foto %>" />
+          <% } else { %>
+            <img id="preview_img" src="/images/img.png" />
+          <% } %>
+        </div>
+        <input type="file" id="foto" name="foto" accept="image/*" />
+    </div>
 
       <!-- Email -->
       <div class="form_group">
-        <label for="email"><%=usuario.email%></label>
-        <input type="email" id="email" name="email" value="user@example.com" />
-        <button href="/forgot" class="change_password_btn">Alterar Senha</button>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="<%= usuario.email %>" />
       </div>
 
       <!-- Nome -->
       <div class="form_group">
-        <label for="nome"><%=usuario.nome%></label>
-        <input type="text" id="nome" name="nome" value="John" />
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" value="<%= usuario.nome %>" />
       </div>
 
       <!-- Sobrenome -->
       <div class="form_group">
         <label for="sobrenome">Sobrenome:</label>
-        <input type="text" id="sobrenome" name="sobrenome" value="Doe" />
+        <input type="text" id="sobrenome" name="sobrenome" value="<%= usuario.sobrenome %>" />
       </div>
 
       <!-- Data de Nascimento -->
       <div class="form_group">
         <label for="data_nascimento">Data de Nascimento:</label>
-        <input type="date" id="data_nascimento" name="data_nascimento" value="1990-01-01" />
+        <input type="date" id="data_nascimento" name="data_nascimento" value="<%= usuario.data_nascimento %>" />
+      </div>
+
+      <div class="form_group">
+        <label for="data_nascimento">CPF:</label>
+        <input type="number" id="cpf" name="cpf" value="<%= usuario.cpf %>" />
       </div>
 
       <!-- Celular -->
       <div class="form_group">
         <label for="celular">Celular:</label>
-        <input type="tel" id="celular" name="celular" value="(123) 456-7890" />
+        <input type="tel" id="celular" name="celular" value="<%= usuario.celular%>" />
       </div>
 
       <!-- Botão de atualizar perfil -->
       <div class="form_group">
         <button type="submit" class="update_profile_btn">Atualizar Perfil</button>
       </div>
-      <% }) %>
     </form>
+    <!-- Botão de atualizar perfil -->
+    <div class="form_group button-container">
+      <div>
+      <a href="/forgot" class="update_profile_btn">Alterar senha</a>
+      </div>
+      <div>
+        <form action="/logout" method="post">
+          <button type="submit" class="update_profile_btn">Sair</button>
+        </form>
+        
+      </div>
+    </div>
+
 </section>
+
+<script>
+  const fileInput = document.getElementById("foto"); // Corrigido para o ID "foto"
+  const previewImg = document.getElementById("preview_img");
+
+  fileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    const fileReader = new FileReader();
+
+    fileReader.onload = () => {
+      previewImg.src = fileReader.result;
+    };
+
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
+  });
+</script>
 
 <%- include('./rodape.ejs') %>

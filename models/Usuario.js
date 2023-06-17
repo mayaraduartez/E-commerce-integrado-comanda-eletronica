@@ -4,7 +4,23 @@ const conexao = require("../config/sequelize");
 const Usuario = conexao.define(
   "Usuario",
   {
+    foto: {
+      type: DataTypes.STRING,
+    },
     nome: {
+      type: DataTypes.STRING,
+    },
+    sobrenome: {
+      type: DataTypes.STRING,
+    },
+    data_nascimento: {
+      type: DataTypes.DATE,
+    },
+    cpf: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
+    celular: {
       type: DataTypes.STRING,
     },
     email: {

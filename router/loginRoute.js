@@ -45,6 +45,19 @@ principalController.pedidos);
 router.get("/meuperfil",
 principalController.abreperfil);
 
+router.post("/meuperfil",
+upload.single('foto'), 
+principalController.salvarperfil);
+
+router.post('/logout', principalController.sair);
+
+
+router.get("/avaliacoes",
+principalController.abreavaliacoes);
+
+router.post("/avaliar", 
+principalController.avaliar);
+
 router.get("/carrinho", 
 principalController.abrecarrinho);
 

@@ -6,6 +6,150 @@ body {
   overflow-x: hidden;
 }
 
+/* Estilos para a seção de avaliações */
+.food_section {
+  padding: 50px 0;
+}
+
+.heading_container {
+  margin-bottom: 30px;
+}
+
+.div1 {
+  margin-bottom: 0;
+}
+
+.div2 {
+  background-color: #ccc;
+  border: 1px solid #1b1e21;
+  text-align: center;
+}
+
+.div2 > * {
+  margin: 0 auto;
+}
+
+.avaliacao_form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.avaliacao_form h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.rating {
+  direction: rtl;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url('path/to/star-icon.png');
+  background-size: cover;
+  cursor: pointer;
+}
+
+.rating input:checked ~ label,
+.rating label:hover {
+  background-image: url('path/to/star-icon-filled.png');
+}
+
+.rating label:last-child {
+  margin-right: 0;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
+  resize: none;
+}
+
+.submit_btn {
+  display: block;
+  width: 150px;
+  margin: 0 auto;
+}
+
+.avaliacoes_container {
+  margin-top: 50px;
+}
+
+.avaliacoes_container h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  background-color: #ccc;
+}
+
+.avaliacao_item {
+  margin-bottom: 20px;
+  /* border: 1px solid #ccc; */
+}
+
+.avaliacao_estrelas {
+  margin-bottom: 10px;
+}
+
+.avaliacao_comentario {
+  font-style: italic;
+}
+
+.pedido {
+  background-color: #fff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px; /* Adicione o espaçamento invisível */
+}
+
+.data-pedido {
+  font-size: 16px;
+  color: #000;
+}
+
+.item-pedido {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: gray;
+}
+
+.valor-total {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: gray;
+}
+
+.situacao-pedido {
+  font-family: Arial, sans-serif;
+  background-color: #3399ff;
+  color: #fff;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px; /* Ajuste o tamanho do texto conforme necessário */
+}
+
+/* Centralizar todo o conteúdo */
+.pedido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
 .img-usuario {
   height: 150px;
   width: 150px;
@@ -23,8 +167,10 @@ body {
 
 .form_group {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
+    flex-direction: row;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: baseline;
 }
 
 label {
@@ -39,6 +185,7 @@ input[type="date"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
+  margin-bottom: 20px;
   font-size: 16px;
 }
 
@@ -51,6 +198,22 @@ button {
   color: #fff;
   cursor: pointer;
 }
+
+.button-container {
+  margin-top: 20px;
+}
+
+.button-container button,
+.button-container a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #6bb1fc;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px; /* Espaço entre o botão e o link */
+}
+
 
 .profile_picture {
   margin-bottom: 20px;
@@ -67,18 +230,30 @@ button {
   background: #dfdfdf;
 }
 
-.change_password_btn {
-  background-color: #87ceeb;
-  color: #000;
-  margin-top: 5px;
-  cursor: pointer;
+
+.update_profile_btn,
+.logout_button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #6bb1fc;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
-.update_profile_btn {
-  background-color: #87ceeb;
-  color: #000;
-  cursor: pointer;
+.change_password_link {
+  display: inline-block;
+  width: 80px; /* Ajuste o valor conforme desejado */
+  height: 40px; /* Ajuste o valor conforme desejado */
+  line-height: 40px; /* Ajuste o valor conforme desejado */
+  background-color: #6bb1fc;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
 }
+
+
 
 
 #customers {

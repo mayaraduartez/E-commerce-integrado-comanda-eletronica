@@ -1,0 +1,126 @@
+<%- include('./cabecalho.ejs') %>
+
+<!-- Avaliações do Restaurante -->
+<section class="food_section layout_padding">
+  <div class="heading_container heading_center">
+    <h2>Avaliações</h2>
+  </div>
+
+  <!-- Formulário de Avaliação -->
+  <div class="div1">
+  <div class="form_group">
+    <form class="avaliacao_form" method="post" action="/avaliar">
+      <h3>Avalie o Restaurante</h3>
+      <p>O que você achou do nosso serviço? </p>
+      <p>Deixei sua avaliação abaixo. Sua opinião é muito importante!</p>
+      <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1"></label>
+      </div>
+      <textarea id="comentario" name="comentario" placeholder="Deixe um comentário"></textarea>
+      <button type="submit" class="submit_btn">Enviar Feedback</button>
+    </form>
+  </div>
+</div>
+
+  <!-- Avaliações dos Usuários -->
+<div class="div2">
+<div class="avaliacoes_container">
+  <h2>Avaliações dos Usuários</h2>
+  <% Avaliacao.forEach(avaliacao => { %>
+    <div class="avaliacao_item">
+      <p class="avaliacao_usuario"><%= avaliacao.Usuario.nome %></p>
+      <div class="avaliacao_estrelas">
+        <% for (let i = 0; i < avaliacao.estrelas; i++) { %>
+          <span class="estrela"></span>
+
+        <% } %>
+      </div>
+      <p class="avaliacao_comentario"><%= avaliacao.comentario %></p>
+    </div>
+  <% }) %>
+</div>
+</div>
+
+</section>
+<script>
+  // preencher as estrelas
+function preencherEstrelas(rating) {
+  const estrelas = document.querySelectorAll('.rating input');
+  estrelas.forEach((estrela, index) => {
+    if (index < rating) {
+      estrela.checked = true;
+    } else {
+      estrela.checked = false;
+    }
+  });
+}
+
+// clique nas estrelas
+const estrelas = document.querySelectorAll('.rating input');
+estrelas.forEach((estrela, index) => {
+  estrela.addEventListener('click', () => {
+    const rating = index + 1;
+    preencherEstrelas(rating);
+  });
+});
+
+</script>
+<style>
+ .estrela {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background-color: #ffc107;
+  clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+}
+
+.avaliacao_usuario {
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  display: inline-block;
+  padding: 5px;
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.rating label::before {
+  content: "\2605";
+  border: 1px solid #fff; /* Altere a cor da borda aqui */
+}
+
+.rating input:checked ~ label,
+.rating input:checked ~ label ~ label {
+  color: #ffc107; /* Altere a cor do preenchimento aqui */
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #ffc107; /* Altere a cor do preenchimento ao passar o mouse aqui */
+}
+.avaliacao_estrelas {
+    color: #ffc107; /* Cor das estrelas preenchidas */
+  }
+
+  .avaliacao_estrelas i {
+    font-size: 24px;
+  }
+
+</style>
+<%- include('./rodape.ejs') %>

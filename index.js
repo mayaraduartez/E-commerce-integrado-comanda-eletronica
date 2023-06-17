@@ -1,5 +1,4 @@
 const express = require("express");
-const methodOverride = require("method-override");
 const app = express();
 const path = require("path");
 const porta = process.env.PORT || 3002;
@@ -13,6 +12,7 @@ const Cardapio = require("./models/Cardapio");
 const Itens = require("./models/Itens");
 const Pedido = require("./models/Pedido");
 const Token = require("./models/Token");
+const Avaliacao = require("./models/Avaliacao");
 
 Itens.belongsTo(Cardapio);
 
@@ -25,13 +25,16 @@ Usuario.hasMany(Pedido);
 Token.belongsTo(Usuario);
 Usuario.hasMany(Token);
 
+Avaliacao.belongsTo(Usuario);
+Usuario.hasMany(Avaliacao);
+
 
 //configuração dos arquivos de visão (VIEWS)
 app.set("view engine", "ejs");
 
 //configurar para receber dados por metodo post
 app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride("_method"));
+
 
 //pasta de arquivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
