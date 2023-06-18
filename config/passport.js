@@ -11,13 +11,13 @@ passport.use(
     
     //verificando se o usuario está do bd, com o find
     if (!usuario) {
-      return cb(null,false, { message: "Usuario não existe!" }); //não teve resultado
+      return cb(null,false, { msg: "Usuario não existe!" }); //não teve resultado
     } else {
       //2º teste pra achar o usuario, pra ver se a senha está errada
       if (!bcrypt.compareSync(password, usuario.senha)) {
-        return cb(null, false, { message: "Senha incorreta!" });
+        return cb(null, false, { msg: "Senha incorreta!" });
       } else {
-        return cb(null, usuario); //por ultimo o resultado diferente dos outros
+        return cb(null, usuario, {msg: "oi"}); //por ultimo o resultado diferente dos outros
       }
     }
   })

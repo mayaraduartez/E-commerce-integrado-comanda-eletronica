@@ -1,14 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const loginController = require("../controllers/loginController"); //importa as funções de controller
+const loginController = require("../controllers/loginController"); 
 const principalController = require("../controllers/principalController"); 
 const upload = require("../config/upload");
 const autenticacao = require("../config/autenticacao");
 const autenticacaoadmin = require("../config/autenticacaoadmin");
 
-
-
-//abrir a tela de login e cadastro
 router.get("/login", 
 loginController.abreTela);
 
@@ -36,35 +33,55 @@ loginController.atualizarsenha)
 router.get("/", 
 principalController.principal);
 
-router.get("/abreinicial", 
-principalController.abreinicial);
+router.get("/menu", 
+autenticacao,
+principalController.menu,
+);
 
 router.get("/meuspedidos", 
+autenticacao,
 principalController.pedidos);
 
 router.get("/meuperfil",
+autenticacao,
 principalController.abreperfil);
 
 router.post("/meuperfil",
 upload.single('foto'), 
+autenticacao,
 principalController.salvarperfil);
 
-router.post('/logout', principalController.sair);
-
+router.post('/logout', 
+autenticacao,
+principalController.sair);
 
 router.get("/avaliacoes",
 principalController.abreavaliacoes);
 
 router.post("/avaliar", 
+autenticacao,
 principalController.avaliar);
 
 router.get("/carrinho", 
+autenticacao,
 principalController.abrecarrinho);
 
-router.get("/menu", 
+router.get("/carrinho/add/:id", 
 autenticacao,
-principalController.menu,
+principalController.addcarrinho,
 );
+
+router.get('/carrinho/remove/:id',
+autenticacao,
+principalController.removeCarrinho);
+
+router.post("/carrinho",
+autenticacao, 
+principalController.salvaritens);
+
+router.get("/abreinicial", 
+autenticacaoadmin,
+principalController.abreinicial);
 
 router.get("/addmenu", 
 autenticacaoadmin,
@@ -80,16 +97,5 @@ router.get("/addpromocao",
 autenticacaoadmin,
 principalController.addpromocao,
 );
-
-router.get("/carrinho/add/:id", 
-principalController.addcarrinho,
-);
-
-router.post("/carrinho", 
-principalController.salvaritens);
-
-router.get('/carrinho/remove/:id', principalController.removeCarrinho);
-
-
 
 module.exports = router;

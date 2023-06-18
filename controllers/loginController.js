@@ -5,27 +5,33 @@ const passport = require("../config/passport");
 const transporter = require("../config/email");
 
 async function cadastro(req, res) {
-var nome = req.body.nome;
-var email = req.body.email;
-var senha = req.body.senha;
-var salt = bcrypt.genSaltSync(10);
-var hash = bcrypt.hashSync(senha, salt);
-const usuario = await Usuario.create({
-nome: nome,
-email: email,
-senha: hash,
-})
+  var nome = req.body.nome;
+  var email = req.body.email;
+  var senha = req.body.senha;
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(senha, salt);
 
-res.redirect("/login");
+  try {
+    const usuario = await Usuario.create({
+      nome: nome,
+      email: email,
+      senha: hash,
+    });
+
+    res.redirect("/login");
+  } catch (error) {
+    res.render("login/cadastro.ejs", { msg: "Esse e-mail já possui cadastro!" });
+  }
 }
 
 
-async function abreTela(req, res) {
-res.render("login/login.ejs");
+async function abreTela(req, res, msg = "") {
+  res.render("login/login.ejs", { msg: "" });
 }
+
 
 async function cadastrar(req, res) {
-res.render("login/cadastro.ejs");
+res.render("login/cadastro.ejs", {msg:""});
 }
 
 async function forgot(req,res) {
@@ -50,7 +56,15 @@ async function atualizarsenha(req, res) {
     }
   });
 
-  
+  if (!usuario) {
+    res.render('login/token.ejs', { msg: 'O email digitado está incorreto do email que foi enviado o token!' });
+    return; 
+  }
+
+  if (!token) {
+    res.render('login/token.ejs', { msg: 'O token está incorreto!' });
+    return; 
+  }
 
   if (token.UsuarioId === usuario.id) {
     // Comando de atualização da senha
@@ -59,10 +73,9 @@ async function atualizarsenha(req, res) {
     usuario.senha = hash;
     await usuario.save();
     res.render('login/login.ejs');
-  } else if(token.UsuarioId != usuario.id){
-    res.render('login/token.ejs', { msg: 'O token está incorreto!' });
-  }
+  } 
 }
+
 
 async function recuperar(req,res) {
 
@@ -118,8 +131,6 @@ async function recuperar(req,res) {
         
     }
  }
-
-
 
 function generatePassword(){
 const chars = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
