@@ -4,6 +4,7 @@ const Itens = require("../models/Itens");
 const Pedido = require("../models/Pedido");
 const Avaliacao = require("../models/Avaliacao");
 const Comanda = require("../models/Comanda");
+const Descricao = require("../models/Descricao");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const { cpf } = require("cpf-cnpj-validator");
@@ -14,8 +15,35 @@ async function principal(req, res) {
 }
 
 async function abreinicial(req, res) {
-  res.render("admin/principal.ejs");
+  const descricao = await Descricao.findAll({}).catch(function (err) {
+    console.log(err);
+  });
+  res.render("admin/principal.ejs", { Descricao: descricao });
 }
+
+async function edtdescricao(req,res){
+  res.render("admin/edtdescricao.ejs");
+}
+
+async function salvardescricao(req, res) {
+  try {
+    await Descricao.destroy({
+      where: {},
+      truncate: true
+    });
+
+    const descricao = await Descricao.create({
+      descricao: req.body.descricao,
+    });
+
+    res.redirect("/abreinicial");
+
+  } catch (error) {
+    console.error(error);
+    res.redirect("/abreinicial");
+  }
+}
+
 
 async function menu(req, res) {
   const cardapio = await Cardapio.findAll({}).catch(function (err) {
@@ -365,6 +393,8 @@ async function salvaritenspedido(req, res) {
 module.exports = {
   principal,
   abreinicial,
+  edtdescricao,
+  salvardescricao,
   menu,
   pedidos,
   abreperfil,

@@ -83,6 +83,12 @@ router.get("/abreinicial",
 autenticacaoadmin,
 principalController.abreinicial);
 
+router.get("/edtdescricao",
+principalController.edtdescricao);
+
+router.post("/edtdescricao",
+principalController.salvardescricao);
+
 router.get("/addmenu", 
 
 principalController.addmenu,

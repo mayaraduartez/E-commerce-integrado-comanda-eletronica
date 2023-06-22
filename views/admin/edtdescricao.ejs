@@ -1,0 +1,47 @@
+<%- include('./cabecalho.ejs') %>
+
+<!-- food section -->
+<section class="food_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Editar descrição</h2>
+    </div>
+    <form class="descricao_form" method="post" action="/edtdescricao">
+        <textarea id="descricao" name="descricao" placeholder="Adicionar nova descrição"></textarea>
+        <button type="submit" class="submit_btn">Atualizar</button>
+      </form>
+    
+  </div>
+</section>
+<style>
+    .descricao_form {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+  
+    #descricao {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  
+    .submit_btn {
+      background-color: #7bc5f7;
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .submit_btn:hover {
+      background-color: #65ade9;
+    }
+  </style>
+<!-- end food section -->
+
+<%- include('./rodape.ejs') %>
