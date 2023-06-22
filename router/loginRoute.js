@@ -84,12 +84,11 @@ autenticacaoadmin,
 principalController.abreinicial);
 
 router.get("/addmenu", 
-autenticacaoadmin,
+
 principalController.addmenu,
 );
 
 router.post("/addmenu", 
-autenticacaoadmin, 
 upload.single('foto'), 
 principalController.criarmenu)
 
@@ -97,5 +96,41 @@ router.get("/addpromocao",
 autenticacaoadmin,
 principalController.addpromocao,
 );
+
+router.get("/menuadm",
+principalController.menuadm,
+);
+
+// router.get("/menuadm/edt/:id", 
+// principalController.renderEdtmenu);
+
+// router.get("/menuadm/edt/:id",
+// principalController.salvaredt);
+
+router.post("/menuadm/edt/:id", 
+principalController.edtmenu);
+
+
+router.post('/menuadm/remove/:id', 
+principalController.removemenu);
+
+router.get("/admmesas",
+principalController.abrecomanda);
+
+router.post('/admmesas', 
+principalController.salvarMesaSelecionada);
+  
+router.get('/pedido',
+principalController.abrepedido);
+
+router.get("/pedido/add/:id", 
+principalController.addpedido,
+);
+
+router.get('/pedido/remove/:id',
+principalController.removepedido);
+
+router.post("/pedido",
+principalController.salvaritenspedido);
 
 module.exports = router;

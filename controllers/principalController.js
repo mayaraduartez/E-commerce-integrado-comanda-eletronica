@@ -3,6 +3,7 @@ const Cardapio = require("../models/Cardapio");
 const Itens = require("../models/Itens");
 const Pedido = require("../models/Pedido");
 const Avaliacao = require("../models/Avaliacao");
+const Comanda = require("../models/Comanda");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const { cpf } = require("cpf-cnpj-validator");
@@ -139,15 +140,45 @@ async function criarmenu(req, res) {
     valor: req.body.valor,
     tipo: req.body.tipo,
   }).catch((err) => {});
-  res.redirect("/menu");
+  res.redirect("/menuadm");
 }
 
-async function addcarrinho(req, res) {
-  if (!req.session.carrinho) {
-    req.session.carrinho = [];
+async function menuadm(req, res) {
+  const cardapio = await Cardapio.findAll({}).catch(function (err) {
+    console.log(err);
+  });
+  res.render("admin/menuadm.ejs", { Cardapio: cardapio });
+}
+
+async function edtmenu(req, res) {
+  const id = req.params.id;
+    const cardapio = await Cardapio.findOne({
+        where: { id: id }
+    });
+
+    if (!cardapio) {
+      console.log("Deu erro")
+    }
+    res.render("admin/edtmenu.ejs", { Cardapio: cardapio });
+
+}
+
+async function removemenu(req, res) {
+  const itemId = req.params.id;
+
+  try {
+    const item = await Cardapio.destroy({ where: { id: itemId } });
+
+    if (item === 0) {
+      return res.status(404).json({ message: 'Item não encontrado' });
+    }
+
+    const cardapio = await Cardapio.findAll(); // Obter os itens atualizados do cardápio
+
+    return res.redirect("/menuadm");
+  } catch (error) {
+    return res.status(500).json({ message: 'Erro ao remover o item do cardápio', error });
   }
-  req.session.carrinho.push(req.params.id);
-  res.redirect("/menu");
 }
 
 async function abrecarrinho(req, res) {
@@ -163,6 +194,14 @@ async function abrecarrinho(req, res) {
   });
 
   res.render("conteudo/carrinho.ejs", { Cardapio: cardapio });
+}
+
+async function addcarrinho(req, res) {
+  if (!req.session.carrinho) {
+    req.session.carrinho = [];
+  }
+  req.session.carrinho.push(req.params.id);
+  res.redirect("/menu");
 }
 
 async function removeCarrinho(req, res) {
@@ -230,6 +269,99 @@ async function pedidos(req, res) {
   res.render("conteudo/meuspedidos", { Pedidos: pedidos });
 }
 
+async function abrecomanda(req, res){
+  const mesaSelecionada = req.session.mesaSelecionada || false; // Move a declaração da variável aqui
+  const cardapio = await Cardapio.findAll({}).catch(function (err) {
+    console.log(err);
+  });
+  
+  res.render("admin/comanda", { Cardapio: cardapio, mesaSelecionada });
+}
+
+async function salvarMesaSelecionada(req, res) {
+  const mesaSelecionada = req.body.mesa;
+
+  req.session.mesaSelecionada = mesaSelecionada;
+  console.log("mesa:" + mesaSelecionada);
+
+  abrecomanda(req, res); // Adicione os argumentos req e res na chamada da função
+}
+async function abrepedido(req, res) {
+  const mesaSelecionada = req.session.mesaSelecionada ;
+  if (!req.session.pedido) {
+    req.session.pedido = [];
+  }
+  const cardapio = await Cardapio.findAll({
+    where: {
+      id: {
+        [Op.or]: [req.session.pedido],
+      },
+    },
+  });
+
+  res.render("admin/pedido.ejs", { Cardapio: cardapio, mesaSelecionada: mesaSelecionada });
+}
+
+
+async function addpedido(req, res) {
+  if (!req.session.pedido) {
+    req.session.pedido = [];
+  }
+  req.session.pedido.push(req.params.id);
+  res.redirect("/admmesas");
+}
+
+async function removepedido(req, res) {
+  const elementoId = req.params.id;
+  console.log(req.params.id);
+  if (!req.session.pedido) {
+    req.session.pedido = [];
+  }
+
+  // Encontre o índice do elemento no carrinho
+  const index = req.session.pedido.indexOf(elementoId);
+
+  if (index !== -1) {
+    // Remova o elemento do carrinho
+    req.session.pedido.splice(index, 1);
+  }
+
+  res.redirect("/pedido");
+}
+
+async function salvaritenspedido(req, res) {
+  try {
+    const pedidos = await Pedido.create({
+      situacao: "pendente",
+      valortotal: 0.0,
+      UsuarioId: null,
+      datapedido: new Date(),
+    });
+
+    for (var i = 0; i < req.body.idpedido.length; i++) {
+      const comanda = await Comanda.create({
+        CardapioId: req.body.idpedido[i],
+        valordoitem: req.body.valorpedido[i],
+        quantidade: req.body.quantidade[i],
+        PedidoId: pedidos.id,
+        mesa: req.body.mesa,
+      });
+      console.log(comanda);
+      pedidos.valortotal +=
+        comanda.valordoitem * comanda.quantidade;
+    }
+
+    await pedidos.save();
+
+    res.redirect("/meuspedidos");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Erro ao salvar pedido");
+  }
+}
+
+
+
 module.exports = {
   principal,
   abreinicial,
@@ -243,8 +375,17 @@ module.exports = {
   abrecarrinho,
   addmenu,
   addpromocao,
+  menuadm,
+  edtmenu,
+  removemenu,
+  abrecomanda,
+  salvarMesaSelecionada,
   criarmenu,
   addcarrinho,
   removeCarrinho,
   salvaritens,
+  abrepedido,
+  addpedido,
+  removepedido,
+  salvaritenspedido,
 };

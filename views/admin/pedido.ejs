@@ -1,0 +1,74 @@
+<%-include('./cabecalho.ejs')%>
+
+<!-- food section -->
+
+<section class="food_section layout_padding">
+  <form method="post">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>Meu Pedido</h2>
+      </div>
+      <input type="hidden" name="mesa" value="<%= mesaSelecionada %>">
+      <table id="customers">
+        <tr>
+          <th>Item</th>
+          <th>Valor</th>
+          <th>Quantidade</th>
+          <th></th>
+        </tr>
+        <% Cardapio.forEach(function(cardapio) { %>
+        <tr>
+          <td class="item-name" name="titulo"><%= cardapio.titulo %></td>
+          <input
+            type="hidden"
+            name="idpedido"
+            min="1"
+            max="100"
+            value="<%= cardapio.id %>"
+          />
+          <td class="item-value">R$ <%= cardapio.valor %></td>
+          <input
+            type="hidden"
+            name="valorpedido"
+            min="1"
+            max="100"
+            value="<%= cardapio.valor %>"
+          />
+          <td>
+            <input
+              type="number"
+              value="1"
+              name="quantidade"
+              min="1"
+              max="100"
+            />
+          </td>
+      
+          <td>
+            <a href="/pedido/remove/<%= cardapio.id %>" class="user_link">
+              <img src="images/remover.png" class="lixeira" alt="delete" />
+            </a>
+          </td>
+        </tr>
+        <% }) %>
+      </table>
+    </div>
+
+    <div class="btn-box">
+      <input
+        type="submit"
+        class="btn btn-success"
+        href="/meuspedidos"
+        value="Confirmar"
+      />
+    </div>
+  </form>
+</section>
+<script
+  src="https://kit.fontawesome.com/your-font-awesome-kit.js"
+  crossorigin="anonymous"
+></script>
+  
+<!-- end food section -->
+
+<%-include('./rodape.ejs')%>

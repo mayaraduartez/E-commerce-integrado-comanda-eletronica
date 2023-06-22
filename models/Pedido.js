@@ -4,6 +4,9 @@ const conexao = require("../config/conexao");
 const Pedido = conexao.define(
     "Pedido", //não precisa dados de autoincremento: id
     {   
+        mesa: {
+            type: DataTypes.INTEGER,
+        },
         datapedido: {
             type: DataTypes.DATEONLY,
         },

@@ -1,0 +1,90 @@
+<%- include('./cabecalho.ejs') %>
+
+<!-- food section -->
+<section class="food_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Cardápio</h2>
+    </div>
+
+    <ul class="filters_menu">
+      <li class="active" data-filter="*">Todos</li>
+      <li data-filter=".hamburguer">Hamburguer's</li>
+      <li data-filter=".porções">Porções</li>
+      <li data-filter=".bebidas">Bebidas</li>
+    </ul>
+
+    <div class="filters-content">
+      <div class="row grid">
+        <% if (Cardapio && Cardapio.length > 0) { %> <%
+        Cardapio.forEach(function(cardapio){ %>
+        <div class="col-sm-6 col-lg-4 all <%= cardapio.tipo %>">
+          <div class="box">
+            <div>
+              <div class="img-box">
+                <img src="images/<%= cardapio.foto %>" height="100%" alt="" />
+              </div>
+              <div class="detail-box">
+                <h5><%= cardapio.titulo %></h5>
+                <p><%= cardapio.descricao %></p>
+                <div class="options">
+                  <h6>R$ <%= cardapio.valor.toFixed(2) %></h6>
+                  <div class="button-container">
+                    <form action="/menuadm/edt/<%= cardapio.id %>" method="post" style="display: inline-block; margin-right: 0.5px;">
+                      <button type="submit" class="edit-button">Editar</button>
+                    </form>
+                    <form action="/menuadm/remove/<%= cardapio.id %>" method="post" style="display: inline-block;">
+                      <button type="submit" class="remove-button">Remover</button>
+                    </form>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <div class="col-12 text-center">
+          <h2 class="empty-message">Não há itens registrados no cardápio</h2>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <div class="btn-box">
+      <a href="">Inicio</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .button-container .edit-button {
+    background-color: #90ab86;
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button-container .remove-button {
+    background-color: #a1483d;
+  }
+
+  .button-container .edit-button:hover {
+    background-color: #7a9776;
+  }
+
+  .button-container .remove-button:hover {
+    background-color: #80322f;
+  }
+
+  .empty-message {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+</style>
+
+<!-- end food section -->
+
+<%- include('./rodape.ejs') %>

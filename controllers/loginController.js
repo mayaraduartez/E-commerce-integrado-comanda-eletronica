@@ -74,8 +74,9 @@ async function atualizarsenha(req, res) {
     var hash = bcrypt.hashSync(novasenha, salt);
     usuario.senha = hash;
     await usuario.save();
-    res.render("login/login.ejs");
+    res.redirect("/login");
   }
+  
 }
 
 async function recuperar(req, res) {
