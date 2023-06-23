@@ -3,7 +3,6 @@ const Cardapio = require("../models/Cardapio");
 const Itens = require("../models/Itens");
 const Pedido = require("../models/Pedido");
 const Avaliacao = require("../models/Avaliacao");
-const Comanda = require("../models/Comanda");
 const Descricao = require("../models/Descricao");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
@@ -314,6 +313,7 @@ async function salvarMesaSelecionada(req, res) {
 
   abrecomanda(req, res); // Adicione os argumentos req e res na chamada da função
 }
+
 async function abrepedido(req, res) {
   const mesaSelecionada = req.session.mesaSelecionada ;
   if (!req.session.pedido) {
@@ -329,7 +329,6 @@ async function abrepedido(req, res) {
 
   res.render("admin/pedido.ejs", { Cardapio: cardapio, mesaSelecionada: mesaSelecionada });
 }
-
 
 async function addpedido(req, res) {
   if (!req.session.pedido) {
@@ -356,39 +355,6 @@ async function removepedido(req, res) {
 
   res.redirect("/pedido");
 }
-
-async function salvaritenspedido(req, res) {
-  try {
-    const pedidos = await Pedido.create({
-      situacao: "pendente",
-      valortotal: 0.0,
-      UsuarioId: null,
-      datapedido: new Date(),
-    });
-
-    for (var i = 0; i < req.body.idpedido.length; i++) {
-      const comanda = await Comanda.create({
-        CardapioId: req.body.idpedido[i],
-        valordoitem: req.body.valorpedido[i],
-        quantidade: req.body.quantidade[i],
-        PedidoId: pedidos.id,
-        mesa: req.body.mesa,
-      });
-      console.log(comanda);
-      pedidos.valortotal +=
-        comanda.valordoitem * comanda.quantidade;
-    }
-
-    await pedidos.save();
-
-    res.redirect("/meuspedidos");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Erro ao salvar pedido");
-  }
-}
-
-
 
 module.exports = {
   principal,
@@ -417,5 +383,4 @@ module.exports = {
   abrepedido,
   addpedido,
   removepedido,
-  salvaritenspedido,
 };

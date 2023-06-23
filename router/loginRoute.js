@@ -84,18 +84,21 @@ autenticacaoadmin,
 principalController.abreinicial);
 
 router.get("/edtdescricao",
+autenticacaoadmin,
 principalController.edtdescricao);
 
 router.post("/edtdescricao",
+autenticacaoadmin,
 principalController.salvardescricao);
 
 router.get("/addmenu", 
-
+autenticacaoadmin,
 principalController.addmenu,
 );
 
 router.post("/addmenu", 
 upload.single('foto'), 
+autenticacaoadmin,
 principalController.criarmenu)
 
 router.get("/addpromocao", 
@@ -104,6 +107,7 @@ principalController.addpromocao,
 );
 
 router.get("/menuadm",
+autenticacaoadmin,
 principalController.menuadm,
 );
 
@@ -118,25 +122,29 @@ principalController.edtmenu);
 
 
 router.post('/menuadm/remove/:id', 
+autenticacaoadmin,
 principalController.removemenu);
 
 router.get("/admmesas",
+autenticacaoadmin,
 principalController.abrecomanda);
 
-router.post('/admmesas', 
+router.post('/admmesas',
+autenticacaoadmin, 
 principalController.salvarMesaSelecionada);
   
 router.get('/pedido',
+autenticacaoadmin,
 principalController.abrepedido);
 
 router.get("/pedido/add/:id", 
+autenticacaoadmin,
 principalController.addpedido,
 );
 
 router.get('/pedido/remove/:id',
+autenticacaoadmin,
 principalController.removepedido);
 
-router.post("/pedido",
-principalController.salvaritenspedido);
 
 module.exports = router;
