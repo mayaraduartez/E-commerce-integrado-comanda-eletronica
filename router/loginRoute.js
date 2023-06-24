@@ -111,15 +111,8 @@ autenticacaoadmin,
 principalController.menuadm,
 );
 
-// router.get("/menuadm/edt/:id", 
-// principalController.renderEdtmenu);
-
-// router.get("/menuadm/edt/:id",
-// principalController.salvaredt);
-
 router.post("/menuadm/edt/:id", 
 principalController.edtmenu);
-
 
 router.post('/menuadm/remove/:id', 
 autenticacaoadmin,

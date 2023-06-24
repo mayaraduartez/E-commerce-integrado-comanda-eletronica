@@ -43,7 +43,6 @@ async function salvardescricao(req, res) {
   }
 }
 
-
 async function menu(req, res) {
   const cardapio = await Cardapio.findAll({}).catch(function (err) {
     console.log(err);
@@ -138,6 +137,7 @@ async function avaliar(req, res) {
         UsuarioId: req.user.id,
         estrelas: salvarestrelas,
         comentario: req.body.comentario,
+        data: new Date(),
       });
       await avaliacao.save();
 
@@ -258,22 +258,27 @@ async function salvaritens(req, res) {
   }).catch((err) => {});
 
   for (var i = 0; i < req.body.idpedido.length; i++) {
+    const valorPedido = parseFloat(req.body.valorpedido[i]);
+
     const itens = await Itens.create({
       CardapioId: req.body.idpedido[i],
-      valordoitem: req.body.valorpedido[i],
+      valordoitem: valorPedido,
       quantidade: req.body.quantidade[i],
       PedidoId: pedidos.id,
     }).catch((err) => {
       console.log(err);
     });
+
     console.log(itens);
-    pedidos.valortotal =
-      pedidos.valortotal + itens.valordoitem * itens.quantidade;
+
+    pedidos.valortotal += valorPedido * itens.quantidade;
   }
+
   await pedidos.save();
 
   res.redirect("/meuspedidos");
 }
+
 
 async function pedidos(req, res) {
   const pedidos = await Pedido.findAll({

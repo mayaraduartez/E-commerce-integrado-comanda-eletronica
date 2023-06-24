@@ -21,6 +21,9 @@ const Avaliacao = conexao.define(
         type: DataTypes.STRING,
         allowNull: true,
       },
+      data: {
+        type: DataTypes.DATEONLY,
+      },
   },
   {
     timestamps: false, //não cria o createdat e updatedat

@@ -27,6 +27,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      data:{
+        type: Sequelize.DATEONLY,
+      },
     });
   },
 

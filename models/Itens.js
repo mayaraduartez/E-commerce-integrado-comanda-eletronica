@@ -8,7 +8,7 @@ const Itens = conexao.define(
             type: DataTypes.INTEGER,
         },
         valordoitem: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
         },
     },
     {
