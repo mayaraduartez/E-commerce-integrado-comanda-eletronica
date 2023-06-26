@@ -190,6 +190,38 @@ async function edtmenu(req, res) {
 
 }
 
+async function edtsalvar(req, res) {
+  try {
+    const id = req.params.id;
+    const { foto, titulo, descricao, tipo, valor } = req.body;
+
+    const cardapio = await Cardapio.findOne({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!cardapio) {
+      return res.status(404).json({ error: 'Cardápio não encontrado' });
+    }
+
+    cardapio.foto = foto;
+    cardapio.titulo = titulo;
+    cardapio.descricao = descricao;
+    cardapio.tipo = tipo;
+    cardapio.valor = valor;
+
+    await cardapio.save();
+
+    return res.status(200).json({ message: 'Cardápio atualizado com sucesso' });
+  } catch (error) {
+    console.error('Erro ao atualizar o cardápio:', error);
+    return res.status(500).json({ error: 'Ocorreu um erro ao atualizar o cardápio' });
+  }
+}
+
+
+
 async function removemenu(req, res) {
   const itemId = req.params.id;
 
@@ -378,6 +410,7 @@ module.exports = {
   addpromocao,
   menuadm,
   edtmenu,
+  edtsalvar,
   removemenu,
   abrecomanda,
   salvarMesaSelecionada,

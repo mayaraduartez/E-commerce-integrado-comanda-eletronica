@@ -114,6 +114,10 @@ principalController.menuadm,
 router.post("/menuadm/edt/:id", 
 principalController.edtmenu);
 
+router.post("/edtsalvar/:id",
+upload.single("foto"),
+principalController.edtsalvar);
+
 router.post('/menuadm/remove/:id', 
 autenticacaoadmin,
 principalController.removemenu);

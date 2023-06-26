@@ -1733,6 +1733,8 @@ h1, .h1 {
 
 h2, .h2 {
   font-size: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 h3, .h3 {
@@ -3377,6 +3379,7 @@ textarea.form-control {
 .form-row > [class*="col-"] {
   padding-right: 5px;
   padding-left: 5px;
+  margin-bottom: 10px;
 }
 
 .form-check {

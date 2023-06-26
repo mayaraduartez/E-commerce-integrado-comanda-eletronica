@@ -13,7 +13,7 @@
           </div>
           <div class="card-body">
             <form id="demo-form2" method="post" enctype="multipart/form-data" data-parsley-validate
-              class="form-horizontal form-label-left">
+              class="form-horizontal form-label-left" action="/edtsalvar/<%= Cardapio.id %>">
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
                   <img class="img-circle img-fluid" id="blah" src="images/<%= Cardapio.foto %>"
@@ -63,8 +63,7 @@
               <div class="ln_solid"></div>
               <div class="item form-group">
                 <div class="col-md-6 col-sm-6 offset-md-3">
-                  <input type="reset" class="btn btn-primary" type="reset" value="Limpar">
-                  <input type="submit" class="btn btn-success" href="/menu" value="Enviar">
+                  <input type="submit" class="btn btn-success" value="Enviar">
                 </div>
               </div>
             </form>
@@ -74,5 +73,29 @@
     </div>
   </div>
 </section>
+<style>
+  textarea.textarea--style-6 {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  input[type="number"].input--style-6 {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-appearance: textfield; /* Remover as setas no Firefox */
+  }
 
+  input[type="number"].input--style-6::-webkit-inner-spin-button,
+  input[type="number"].input--style-6::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remover as setas no Chrome e Safari */
+    margin: 0;
+  }
+</style>
 <%- include('./rodape.ejs') %>

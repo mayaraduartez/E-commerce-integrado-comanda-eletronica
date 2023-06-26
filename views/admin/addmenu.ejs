@@ -74,7 +74,7 @@
               <div class="ln_solid"></div>
               <div class="item form-group">
                 <div class="col-md-6 col-sm-6 offset-md-3">
-                  <input type="reset" class="btn btn-primary" type="reset" value="Limpar">
+                  <input type="reset" class="btn btn-primary" type="reset" onclick="limparCampos()"value="Limpar">
                   <input type="submit" class="btn btn-success" href="/menu" value="Enviar">
                 </div>
               </div>
@@ -86,6 +86,37 @@
     </div>
   </div>
 </section>
+<style>
+  textarea.textarea--style-6 {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  input[type="number"].input--style-6 {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-appearance: textfield; /* Remover as setas no Firefox */
+  }
+
+  input[type="number"].input--style-6::-webkit-inner-spin-button,
+  input[type="number"].input--style-6::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remover as setas no Chrome e Safari */
+    margin: 0;
+  }
+</style>
+<script>
+  function limparCampos() {
+    document.getElementById("demo-form2").reset();
+  }
+</script>
+
 
 <!-- end food section -->
 
