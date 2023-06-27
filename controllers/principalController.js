@@ -4,6 +4,8 @@ const Itens = require("../models/Itens");
 const Pedido = require("../models/Pedido");
 const Avaliacao = require("../models/Avaliacao");
 const Descricao = require("../models/Descricao");
+const Pedido_Comanda = require("../models/Pedido_Comanda");
+const Comanda = require("../models/Comanda");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const { cpf } = require("cpf-cnpj-validator");
@@ -213,7 +215,7 @@ async function edtsalvar(req, res) {
 
     await cardapio.save();
 
-    return res.status(200).json({ message: 'Cardápio atualizado com sucesso' });
+   return res.redirect('/menuadm');
   } catch (error) {
     console.error('Erro ao atualizar o cardápio:', error);
     return res.status(500).json({ error: 'Ocorreu um erro ao atualizar o cardápio' });
@@ -282,35 +284,38 @@ async function removeCarrinho(req, res) {
 }
 
 async function salvaritens(req, res) {
-  const pedidos = await Pedido.create({
-    situacao: "pendente",
-    valortotal: 0.0,
-    UsuarioId: req.user.id,
-    datapedido: new Date(),
-  }).catch((err) => {});
-
-  for (var i = 0; i < req.body.idpedido.length; i++) {
-    const valorPedido = parseFloat(req.body.valorpedido[i]);
-
-    const itens = await Itens.create({
-      CardapioId: req.body.idpedido[i],
-      valordoitem: valorPedido,
-      quantidade: req.body.quantidade[i],
-      PedidoId: pedidos.id,
-    }).catch((err) => {
-      console.log(err);
+  try {
+    const pedidos = await Pedido.create({
+      situacao: "pendente",
+      valortotal: 0.0,
+      UsuarioId: req.user.id,
+      datapedido: new Date(),
     });
 
-    console.log(itens);
+    for (var i = 0; i < req.body.idpedido.length; i++) {
+      const valorPedido = parseFloat(req.body.valorpedido[i]);
+      const quantidade = parseInt(req.body.quantidade[i]);
 
-    pedidos.valortotal += valorPedido * itens.quantidade;
+      const itens = await Itens.create({
+        CardapioId: req.body.idpedido[i],
+        valordoitem: valorPedido,
+        quantidade: quantidade,
+        PedidoId: pedidos.id,
+      });
+
+      console.log(itens);
+
+      pedidos.valortotal += valorPedido * quantidade;
+    }
+
+    await pedidos.save();
+
+    res.redirect("/meuspedidos");
+  } catch (error) {
+    console.error('Erro ao salvar os itens:', error);
+    return res.status(500).json({ error: 'Ocorreu um erro ao salvar os itens' });
   }
-
-  await pedidos.save();
-
-  res.redirect("/meuspedidos");
 }
-
 
 async function pedidos(req, res) {
   const pedidos = await Pedido.findAll({
@@ -393,6 +398,49 @@ async function removepedido(req, res) {
   res.redirect("/pedido");
 }
 
+async function salvarcomanda(req, res) {
+  try {
+    const pedidos_comanda = await Pedido_Comanda.create({
+      situacao: "pendente",
+      valortotal: 0.0,
+      datapedido: new Date(),
+      mesa: req.body.mesa,
+    });
+
+    console.log(pedidos_comanda);
+
+    let valortotal = 0.0;
+
+    for (var i = 0; i < req.body.idpedido.length; i++) {
+      const valorPedido = parseFloat(req.body.valorpedido[i]);
+      const quantidade = parseInt(req.body.quantidade[i]);
+
+      console.log(pedidos_comanda.id);
+      console.log(req.body.idpedido[i]);
+
+      const comanda = await Comanda.create({
+        CardapioId: req.body.idpedido[i],
+        valordoitem: valorPedido,
+        quantidade: quantidade,
+        PedidoComandaId: pedidos_comanda.id,
+      });
+
+      console.log(comanda);
+
+      valortotal += valorPedido * quantidade;
+    }
+
+    pedidos_comanda.valortotal = valortotal;
+    await pedidos_comanda.save();
+
+    return res.status(200).json({ message: 'Comanda salva com sucesso' });
+  } catch (error) {
+    console.error('Erro ao salvar a comanda:', error);
+    return res.status(500).json({ error: 'Ocorreu um erro ao salvar a comanda' });
+  }
+}
+
+
 module.exports = {
   principal,
   abreinicial,
@@ -421,4 +469,5 @@ module.exports = {
   abrepedido,
   addpedido,
   removepedido,
+  salvarcomanda,
 };

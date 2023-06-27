@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const porta = process.env.PORT || 3002;
+const porta = process.env.PORT || 3001;
 var session = require("express-session");
 var passport = require("passport");
 
@@ -13,6 +13,8 @@ const Itens = require("./models/Itens");
 const Pedido = require("./models/Pedido"); 
 const Token = require("./models/Token");
 const Avaliacao = require("./models/Avaliacao");
+const Comanda = require("./models/Comanda");
+const Pedido_Comanda = require("./models/Pedido_Comanda");
 
 Itens.belongsTo(Cardapio);
 
@@ -27,6 +29,11 @@ Usuario.hasMany(Token);
 
 Avaliacao.belongsTo(Usuario);
 Usuario.hasMany(Avaliacao);
+
+Comanda.belongsTo(Cardapio);
+
+Comanda.belongsTo(Pedido_Comanda);
+Pedido_Comanda.hasMany(Comanda);
 
 
 //configuração dos arquivos de visão (VIEWS)

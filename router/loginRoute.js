@@ -143,5 +143,8 @@ router.get('/pedido/remove/:id',
 autenticacaoadmin,
 principalController.removepedido);
 
+router.post('/pedido',
+principalController.salvarcomanda);
+
 
 module.exports = router;
