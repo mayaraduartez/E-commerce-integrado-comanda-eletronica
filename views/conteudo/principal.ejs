@@ -113,13 +113,15 @@
             <div class="container ">
               <div class="row">
                 <div class="col-md-7 col-lg-6 ">
+                  <%Descricao.forEach(function(descricao){%>
                   <div class="detail-box">
                     <h1>
                       D'Lenha Hamburgueria
                     </h1>
                     <p>
-                      O melhor Hamburguer artesanal tu encontra aqui! Hamburguer's feito com carnes selecionadas e assado na brasa. 
+                      <%=descricao.descricao%>
                     </p>
+                    <%})%>
                     <div class="btn-box">
                       <a href="/menu" class="btn1">
                         Ver Menu

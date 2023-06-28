@@ -146,5 +146,16 @@ principalController.removepedido);
 router.post('/pedido',
 principalController.salvarcomanda);
 
+router.get('/pedidoscozinha',
+principalController.pedidoscozinha);
+
+router.post('/admsair', 
+principalController.admsair);
+
+router.post("/prontodelivery/:id",
+principalController.updatesituacaodelivery);
+
+router.post("/prontocomanda/:id",
+principalController.updatesituacao);
 
 module.exports = router;

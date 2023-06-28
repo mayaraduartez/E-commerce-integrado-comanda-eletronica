@@ -9,7 +9,7 @@
         <h2>Meu Pedido</h2>
       </div>
       <input type="hidden" name="mesa" value="<%= mesaSelecionada %>">
-      <table id="customers">
+      <table id="customers" class="tabela-pedido">
         <tr>
           <th>Item</th>
           <th>Valor</th>
@@ -52,12 +52,16 @@
         </tr>
         <% }) %>
       </table>
+      <div id="mensagemDiv" class="col-12 text-center" style="display: none;">
+        <h2 class="empty-message">Seu pedido está sendo preparado. Por favor, aguarde. E bom aproveito!</h2>
+      </div>
     </div>
 
     <div class="btn-box">
       <input
         type="submit"
-        class="btn btn-success"
+        id="btnConfirmar"
+        class="btn btn-success btn-confirmar"
         href=""
         value="Confirmar"
       />
@@ -68,6 +72,28 @@
   src="https://kit.fontawesome.com/your-font-awesome-kit.js"
   crossorigin="anonymous"
 ></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $("form").submit(function(event) {
+      event.preventDefault();
+
+      var $form = $(this);
+      var $tabelaPedido = $form.find(".tabela-pedido");
+      var $mensagemDiv = $("#mensagemDiv");
+      var $btnConfirmar = $form.find(".btn-confirmar");
+
+      $.post($form.attr("action"), $form.serialize(), function(response) {
+        $tabelaPedido.hide(); // Oculta a tabela
+        $btnConfirmar.hide(); // Oculta o botão de confirmação
+        $mensagemDiv.show(); // Exibe a div da mensagem
+      });
+    });
+  });
+</script>
+
+
+
   
 <!-- end food section -->
 

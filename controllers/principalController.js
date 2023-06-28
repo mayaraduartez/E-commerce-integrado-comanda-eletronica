@@ -12,7 +12,10 @@ const { cpf } = require("cpf-cnpj-validator");
 const moment = require("moment");
 
 async function principal(req, res) {
-  res.render("conteudo/principal.ejs");
+  const descricao = await Descricao.findAll({}).catch(function (err) {
+    console.log(err);
+  });
+  res.render("conteudo/principal.ejs", { Descricao: descricao });
 }
 
 async function abreinicial(req, res) {
@@ -118,11 +121,21 @@ async function sair(req, res) {
   });
 }
 
-async function abreavaliacoes(req, res) {
-  const avaliacao = await Avaliacao.findAll({include: [Usuario]}).catch(function (err) {
-    console.log(err);
+async function admsair(req,res){
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
   });
-  res.render("conteudo/avaliacao", {Avaliacao: avaliacao});
+}
+
+async function abreavaliacoes(req, res) {
+  const avaliacao = await Avaliacao.findAll({
+    include: [Usuario],
+    order: [['id', 'DESC']] // Classificar pelo ID em ordem decrescente
+  });
+  res.render("conteudo/avaliacao", { Avaliacao: avaliacao });
 }
 
 async function avaliar(req, res) {
@@ -221,8 +234,6 @@ async function edtsalvar(req, res) {
     return res.status(500).json({ error: 'Ocorreu um erro ao atualizar o cardápio' });
   }
 }
-
-
 
 async function removemenu(req, res) {
   const itemId = req.params.id;
@@ -440,6 +451,85 @@ async function salvarcomanda(req, res) {
   }
 }
 
+async function pedidoscozinha(req,res){
+  const pedidos = await Pedido.findAll({
+    include: [
+      {
+        model: Itens,
+        include: [
+          {
+            model: Cardapio,
+          },
+        ],
+      },
+    ],
+    order: [["id", "DESC"]], // Ordenar por ID em ordem decrescente
+  });
+
+  const pedidos_comanda = await Pedido_Comanda.findAll({
+    include: [
+      {
+        model: Comanda,
+        include: [
+          {
+            model: Cardapio,
+          },
+        ],
+      },
+    ],
+    order: [["id", "DESC"]], // Ordenar por ID em ordem decrescente
+  });
+
+  res.render("admin/pedidoscozinha.ejs", { Pedidos: pedidos, Pedido_Comanda: pedidos_comanda });
+}
+
+async function updatesituacaodelivery(req,res){
+  const pedidoId = req.params.id;
+
+  try {
+    const pedido = await Pedido.findOne({
+      where:{
+        id: pedidoId,
+      },
+    });
+
+    if (!pedido) {
+      return res.status(404).json({ error: 'Pedido não encontrado' });
+    }
+
+    pedido.situacao = 'Pronto'; // Atualize a situação do pedido para "pronto"
+    await pedido.save(); // Salve as alterações no banco de dados
+
+    return res.status(200).json({ message: 'Situação do pedido atualizada com sucesso' });
+  } catch (error) {
+    console.error('Erro ao atualizar a situação do pedido:', error);
+    return res.status(500).json({ error: 'Erro ao atualizar a situação do pedido' });
+  }
+}
+
+async function updatesituacao(req,res){
+  const pedidoId = req.params.id; 
+
+  try {
+    const pedido_comanda = await Pedido_Comanda.findOne({
+      where: {
+        id: pedidoId,
+      },
+    });
+
+    if (!pedido_comanda) {
+      return res.status(404).json({ error: 'Pedido não encontrado' });
+    }
+
+    pedido_comanda.situacao = 'Pronto'; // Atualize a situação do pedido para "pronto"
+    await pedido_comanda.save(); // Salve as alterações no banco de dados
+
+    return res.status(200).json({ message: 'Situação do pedido atualizada com sucesso' });
+  } catch (error) {
+    console.error('Erro ao atualizar a situação do pedido:', error);
+    return res.status(500).json({ error: 'Erro ao atualizar a situação do pedido' });
+  }
+} 
 
 module.exports = {
   principal,
@@ -451,6 +541,7 @@ module.exports = {
   abreperfil,
   salvarperfil,
   sair,
+  admsair,
   abreavaliacoes,
   avaliar,
   abrecarrinho,
@@ -470,4 +561,7 @@ module.exports = {
   addpedido,
   removepedido,
   salvarcomanda,
+  pedidoscozinha,
+  updatesituacaodelivery,
+  updatesituacao,
 };
