@@ -500,7 +500,7 @@ async function updatesituacaodelivery(req,res){
     pedido.situacao = 'Pronto'; // Atualize a situação do pedido para "pronto"
     await pedido.save(); // Salve as alterações no banco de dados
 
-    return res.status(200).json({ message: 'Situação do pedido atualizada com sucesso' });
+    return res.redirect('/pedidoscozinha');
   } catch (error) {
     console.error('Erro ao atualizar a situação do pedido:', error);
     return res.status(500).json({ error: 'Erro ao atualizar a situação do pedido' });
@@ -524,7 +524,7 @@ async function updatesituacao(req,res){
     pedido_comanda.situacao = 'Pronto'; // Atualize a situação do pedido para "pronto"
     await pedido_comanda.save(); // Salve as alterações no banco de dados
 
-    return res.status(200).json({ message: 'Situação do pedido atualizada com sucesso' });
+    return res.redirect('/pedidoscozinha');
   } catch (error) {
     console.error('Erro ao atualizar a situação do pedido:', error);
     return res.status(500).json({ error: 'Erro ao atualizar a situação do pedido' });

@@ -1,78 +1,85 @@
 <%-include('./cabecalho.ejs')%>
 
 <!-- food section -->
-
 <section class="food_section layout_padding">
   <div class="container">
     <div class="heading_container heading_center">
-      <h2>Meus Pedidos</h2>
+      <h2>Pedidos de hoje</h2>
     </div>
 
     <ul class="filters_menu">
-        <li class="active" data-filter="*">Todos</li>
-        <li data-filter=".delivery">Delivery</li>
-        <li data-filter=".estabelecimento">Estabelecimento</li>
-      </ul>
+        <li class="active" data-filter="*">Todos <span id="totalPedidos"></span></li>
+        <li data-filter=".delivery">Delivery <span id="totalDelivery"></span></li>
+        <li data-filter=".estabelecimento">Estabelecimento <span id="totalEstabelecimento"></span></li>
+    </ul>
 
     <div class="filters-content">
-      <div class="row grid">
-        <%Pedidos.forEach(function(pedido){%>
-            <div class="col-sm-6 col-lg-4 all delivery">
-           
-                <div>
-                  <div class="pedido">
-                    <h5 class="data-pedido"><%=pedido.datapedido%></h5>
-                    <p class="item-pedido">
-                      <%pedido.Itens.forEach(function(item){%> <%=item.quantidade%> x <%=item.Cardapio.titulo%>
-                      <br />
-    
-                      <%})%>
-                    </p>
-                    <div class="valor-pedido">
-                      <h6 class="valor total">
-                        Total R$: <%=pedido.valortotal%> <br />
-                      </h6>
-                      
-                      <form method="post" action="/prontodelivery/<%= pedido.id %>">
-                        <button style="border-radius: 6px;">Entregar</button>
-
-                      </form>
+        <div class="row grid">
+            <% var totalCount = 0; %>
+            <% var deliveryCount = 0; %>
+            <% var estabelecimentoCount = 0; %>
+            <% Pedidos.forEach(function(pedido){ %>
+                <% if (pedido.situacao !== "Pronto") { %>
+                    <% totalCount++; %>
+                    <% deliveryCount++; %>
+                    <div class="col-sm-6 col-lg-4 all delivery">
+                        <div>
+                            <div class="pedido">
+                                <h5 class="data-pedido"><%= pedido.datapedido %></h5>
+                                <p class="item-pedido">
+                                    <% pedido.Itens.forEach(function(item){ %>
+                                        <%= item.quantidade %> x <%= item.Cardapio.titulo %><br />
+                                    <% }) %>
+                                </p>
+                                <div class="valor-pedido">
+                                    <h6 class="valor total">
+                                        Total R$: <%= pedido.valortotal %> <br />
+                                    </h6>
+                                    <form method="post" action="/prontodelivery/<%= pedido.id %>">
+                                        <button style="border-radius: 6px;">Entregar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              
-            </div>
-        <%})%>
-        <%Pedido_Comanda.forEach(function(pedido_comanda){%>
-            <div class="col-sm-6 col-lg-4 all estabelecimento">
-                <div>
-                  <div class="pedido">
-                    <h5 class="data-pedido"><%=pedido_comanda.datapedido%></h5>
-                    <h5 class="data-pedido">Mesa: <%=pedido_comanda.mesa%></h5>
-                    
-                    <div class="valor-pedido">
-                      <h6 class="valor total">
-                        Total R$: <%=pedido_comanda.valortotal%> <br />
-                      </h6>
-                      <form method="post" action="/prontocomanda/<%= pedido_comanda.id %>">
-                        <button style="border-radius: 6px;">Pronto</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              
-            </div>
-        <%})%>
+                <% } %>
+            <% }) %>
 
-      </div>
+            <% Pedido_Comanda.forEach(function(pedido_comanda){ %>
+                <% if (pedido_comanda.situacao !== "Pronto") { %>
+                    <% totalCount++; %>
+                    <% estabelecimentoCount++; %>
+                    <div class="col-sm-6 col-lg-4 all estabelecimento">
+                        <div>
+                            <div class="pedido">
+                                <h5 class="data-pedido"><%= pedido_comanda.datapedido %></h5>
+                                <h5 class="data-pedido">Mesa: <%= pedido_comanda.mesa %></h5>
+                                <div class="valor-pedido">
+                                    <h6 class="valor total">
+                                        Total R$: <%= pedido_comanda.valortotal %> <br />
+                                    </h6>
+                                    <form method="post" action="/prontocomanda/<%= pedido_comanda.id %>">
+                                        <button style="border-radius: 6px;">Pronto</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            <% }) %>
+
+            <script>
+                document.getElementById("totalPedidos").innerText = "(Total: <%= totalCount %>)";
+                document.getElementById("totalDelivery").innerText = "(Total: <%= deliveryCount %>)";
+                document.getElementById("totalEstabelecimento").innerText = "(Total: <%= estabelecimentoCount %>)";
+            </script>
+        </div>
     </div>
     <div class="btn-box">
       <a href=""> Inicio </a>
     </div>
   </div>
 </section>
-  
-  
 <!-- end food section -->
 
 <%-include('./rodape.ejs')%>
