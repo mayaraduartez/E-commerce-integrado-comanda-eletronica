@@ -13,6 +13,14 @@ const Pedido = conexao.define(
         valortotal: {
             type: DataTypes.FLOAT,
         },
+        metodo: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        endereco: {
+            type: DataTypes.JSON, // Ou outro tipo adequado para armazenar o objeto de endereço
+            allowNull: true // Permitir que o endereço seja nulo caso o método seja "buscar"
+        }
     },
     {
         timestamps: false, //sequelize trabalha com timestamps 'não cria data de atualização'

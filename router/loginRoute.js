@@ -99,12 +99,7 @@ principalController.addmenu,
 router.post("/addmenu", 
 upload.single('foto'), 
 autenticacaoadmin,
-principalController.criarmenu)
-
-router.get("/addpromocao", 
-autenticacaoadmin,
-principalController.addpromocao,
-);
+principalController.criarmenu);
 
 router.get("/menuadm",
 autenticacaoadmin,

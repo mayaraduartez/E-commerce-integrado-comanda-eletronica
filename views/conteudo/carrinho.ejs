@@ -1,9 +1,21 @@
 <%-include('./cabecalho.ejs')%>
 
 <!-- food section -->
-
 <section class="food_section layout_padding">
-  <form method="post">
+  <% if (Cardapio.length === 0) { %>
+  <div class="container">
+    <div class="empty-cart">
+      <h2>Seu carrinho está vazio!</h2>
+      <a
+        href="/menu"
+        class="btn btn-primary"
+        style="background-color: #28a745; border-color: #28a745"
+        >Voltar para o cardápio</a
+      >
+    </div>
+  </div>
+  <% } else { %>
+  <form method="post" id="carrinhoForm">
     <div class="container">
       <div class="heading_container heading_center">
         <h2>Meu Carrinho</h2>
@@ -42,7 +54,7 @@
               max="100"
             />
           </td>
-      
+
           <td>
             <a href="/carrinho/remove/<%= cardapio.id %>" class="user_link">
               <img src="images/remover.png" class="lixeira" alt="delete" />
@@ -55,19 +67,179 @@
 
     <div class="btn-box">
       <input
-        type="submit"
+        type="button"
         class="btn btn-success"
-        href="/meuspedidos"
-        value="Confirmar"
+        value="Continuar"
+        onclick="exibirFormularioPagamento()"
       />
     </div>
+
+    <!-- segunda parte do formulário (método de pagamento) -->
+    <!-- segunda parte do formulário (método de pagamento) -->
+    <div class="teste">
+      <div
+        class="formulario-pagamento"
+        id="formularioPagamento"
+        style="display: none"
+      >
+        <div class="container">
+          <h3>Retirar ou receber em casa?</h3>
+          <div class="radio">
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="metodo"
+                value="buscar"
+                onclick="exibirEndereco(false)"
+              />
+              Buscar
+            </div>
+            <div class="radio-option">
+              <input
+                type="radio"
+                name="metodo"
+                value="delivery"
+                onclick="exibirEndereco(true)"
+              />
+              Delivery
+            </div>
+          </div>
+
+          <!-- resto do formulário (endereço de entrega) -->
+          <div class="endereco" id="enderecoEntrega" style="display: none">
+            <h3>Endereço de entrega</h3>
+            <div class="form-group">
+              <label for="inputRua">Rua</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputRua"
+                name="rua"
+                placeholder="Digite o nome da rua"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputBairro">Bairro</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputBairro"
+                name="bairro"
+                placeholder="Digite o nome do bairro"
+                required
+              />
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputNumero">Número da casa</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNumero"
+                  name="numero"
+                  placeholder="Digite o número da casa"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputTelefone">Telefone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="inputTelefone"
+                  name="telefone"
+                  placeholder="Digite o telefone para contato"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-box">
+          <input
+  type="submit"
+  class="btn btn-success"
+  onclick="return confirmarPedido()"
+  value="Confirmar"
+/>
+
+        </div>
+      </div>
+    </div>
   </form>
+  <% } %>
 </section>
+
+<style>
+  .formulario-pagamento {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .teste {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .radio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adicione o espaçamento desejado entre os inputs */
+  }
+
+  .radio-option {
+    margin-right: 10px; /* Adicione um espaçamento entre os inputs */
+  }
+  .radio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Adicione o espaçamento desejado entre os inputs */
+  }
+
+  .radio-option {
+    margin-right: 10px; /* Adicione um espaçamento entre os inputs */
+  }
+  .empty-cart {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  .empty-cart h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .empty-cart .btn {
+    padding: 10px 20px;
+    font-size: 18px;
+  }
+</style>
+
+<script>
+  function exibirFormularioPagamento() {
+    document.getElementById("formularioPagamento").style.display = "block";
+  }
+
+  function exibirEndereco(exibir) {
+    document.getElementById("enderecoEntrega").style.display = exibir
+      ? "block"
+      : "none";
+  }
+
+  function confirmarPedido() {
+    document.getElementById("carrinhoForm").submit();
+    return true;
+  }
+</script>
+
 <script
   src="https://kit.fontawesome.com/your-font-awesome-kit.js"
   crossorigin="anonymous"
 ></script>
-
-<!-- end food section -->
 
 <%-include('./rodape.ejs')%>

@@ -638,7 +638,7 @@ a:focus {
 
 .slider_section .detail-box {
   color: #ffffff;
-  margin-bottom: 45px;
+
 }
 
 .slider_section .detail-box h1 {
@@ -698,7 +698,6 @@ a:focus {
 
 .offer_section {
   position: relative;
-  padding-top: 45px;
 }
 
 .offer_section .box {

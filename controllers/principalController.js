@@ -296,11 +296,25 @@ async function removeCarrinho(req, res) {
 
 async function salvaritens(req, res) {
   try {
+    const metodo = req.body.metodo;
+    let endereco = {}; // Inicializa o objeto de endereço vazio
+
+    if (metodo === "delivery") {
+      endereco = {
+        rua: req.body.rua,
+        bairro: req.body.bairro,
+        numero: req.body.numero,
+        telefone: req.body.telefone,
+      };
+    }
+
     const pedidos = await Pedido.create({
       situacao: "pendente",
       valortotal: 0.0,
       UsuarioId: req.user.id,
       datapedido: new Date(),
+      metodo: metodo === "buscar" ? "buscar" : metodo,
+      endereco: endereco, // Salva o objeto de endereço no atributo "endereco" do modelo PEDIDO
     });
 
     for (var i = 0; i < req.body.idpedido.length; i++) {
@@ -323,10 +337,11 @@ async function salvaritens(req, res) {
 
     res.redirect("/meuspedidos");
   } catch (error) {
-    console.error('Erro ao salvar os itens:', error);
-    return res.status(500).json({ error: 'Ocorreu um erro ao salvar os itens' });
+    console.error("Erro ao salvar os itens:", error);
+    return res.status(500).json({ error: "Ocorreu um erro ao salvar os itens" });
   }
 }
+
 
 async function pedidos(req, res) {
   const pedidos = await Pedido.findAll({
