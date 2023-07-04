@@ -91,8 +91,8 @@ async function salvarperfil(req, res) {
       usuario.email = req.body.email;
       usuario.sobrenome = req.body.sobrenome;
 
-      const dataNascimento = moment(req.body.data_nascimento, 'YYYY-MM-DD');
-      usuario.data_nascimento = dataNascimento.format('YYYY-MM-DD');
+      const dataNascimento = moment(req.body.data_nascimento, 'YYYY-MM-DD').startOf('day');
+      usuario.data_nascimento = dataNascimento.tz('America/Sao_Paulo').format('YYYY-MM-DD');
 
       const cpfSemCaracteresEspeciais = req.body.cpf.replace(/[^\d]/g, "");
       usuario.cpf = cpfSemCaracteresEspeciais;
@@ -316,11 +316,11 @@ async function salvaritens(req, res) {
       metodo: metodo === "buscar" ? "buscar" : metodo,
       endereco: endereco, // Salva o objeto de endereço no atributo "endereco" do modelo PEDIDO
     });
-
+    if(req.body.idpedido.length>1){
     for (var i = 0; i < req.body.idpedido.length; i++) {
       const valorPedido = parseFloat(req.body.valorpedido[i]);
       const quantidade = parseInt(req.body.quantidade[i]);
-
+      
       const itens = await Itens.create({
         CardapioId: req.body.idpedido[i],
         valordoitem: valorPedido,
@@ -332,6 +332,21 @@ async function salvaritens(req, res) {
 
       pedidos.valortotal += valorPedido * quantidade;
     }
+  }else{
+    const valorPedido = parseFloat(req.body.valorpedido);
+      const quantidade = parseInt(req.body.quantidade);
+      
+      const itens = await Itens.create({
+        CardapioId: req.body.idpedido,
+        valordoitem: valorPedido,
+        quantidade: quantidade,
+        PedidoId: pedidos.id,
+      });
+
+      console.log(itens);
+
+      pedidos.valortotal += valorPedido * quantidade;
+  }
 
     await pedidos.save();
 
@@ -437,12 +452,11 @@ async function salvarcomanda(req, res) {
 
     let valortotal = 0.0;
 
+    if(req.body.idpedido.length > 1){
     for (var i = 0; i < req.body.idpedido.length; i++) {
       const valorPedido = parseFloat(req.body.valorpedido[i]);
       const quantidade = parseInt(req.body.quantidade[i]);
 
-      console.log(pedidos_comanda.id);
-      console.log(req.body.idpedido[i]);
 
       const comanda = await Comanda.create({
         CardapioId: req.body.idpedido[i],
@@ -453,8 +467,24 @@ async function salvarcomanda(req, res) {
 
       console.log(comanda);
 
-      valortotal += valorPedido * quantidade;
+      valortotal += (valorPedido) * (quantidade);
     }
+  }else{
+    const valorPedido = parseFloat(req.body.valorpedido);
+      const quantidade = parseInt(req.body.quantidade);
+
+
+      const comanda = await Comanda.create({
+        CardapioId: req.body.idpedido,
+        valordoitem: valorPedido,
+        quantidade: quantidade,
+        PedidoComandaId: pedidos_comanda.id,
+      });
+
+      console.log(comanda);
+
+      valortotal += (valorPedido) * (quantidade);
+  }
 
     pedidos_comanda.valortotal = valortotal;
     await pedidos_comanda.save();
@@ -494,7 +524,6 @@ async function pedidoscozinha(req,res){
     ],
     order: [["id", "DESC"]], // Ordenar por ID em ordem decrescente
   });
-
   res.render("admin/pedidoscozinha.ejs", { Pedidos: pedidos, Pedido_Comanda: pedidos_comanda });
 }
 

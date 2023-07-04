@@ -14,7 +14,7 @@ const Usuario = conexao.define(
       type: DataTypes.STRING,
     },
     data_nascimento: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
     cpf: {
       type: DataTypes.STRING,

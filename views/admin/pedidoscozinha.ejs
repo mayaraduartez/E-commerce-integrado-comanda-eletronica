@@ -59,6 +59,11 @@
                                     <h6 class="valor total">
                                         Total R$: <%= pedido_comanda.valortotal %> <br />
                                     </h6>
+                                    <p class="item-pedido">
+                                        <%pedido_comanda.Comandas.forEach(function(comanda){%> <%=comanda.quantidade%> x <%=comanda.Cardapio.titulo%>
+                                        <br />
+                                        <%})%>
+                                    </p>
                                     <form method="post" action="/prontocomanda/<%= pedido_comanda.id %>">
                                         <button style="border-radius: 6px;">Pronto</button>
                                     </form>

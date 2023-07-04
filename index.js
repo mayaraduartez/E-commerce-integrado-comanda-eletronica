@@ -4,6 +4,8 @@ const path = require("path");
 const porta = process.env.PORT || 3000;
 var session = require("express-session");
 var passport = require("passport");
+var moment = require("moment");
+app.locals.moment = moment;
 
 const loginRoute = require("./router/loginRoute");
 

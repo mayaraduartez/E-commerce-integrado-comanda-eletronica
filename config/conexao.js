@@ -8,6 +8,11 @@ const conexao = new sequelize(
     host: "localhost",
     port: "5432",
     dialect: "postgres",
+    dialectOptions: {
+      "useUTC": false,
+      "timezone":"-03:00"
+    },
+    "timezone":"-03:00"
   }
 );
 

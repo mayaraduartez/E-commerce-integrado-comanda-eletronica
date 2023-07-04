@@ -12,7 +12,7 @@ module.exports = {
       foto: Sequelize.STRING,
       nome: Sequelize.STRING,
       sobrenome: Sequelize.STRING,
-      data_nascimento: Sequelize.DATE,
+      data_nascimento: Sequelize.DATEONLY,
       cpf: { type: Sequelize.STRING, unique:true },
       celular: Sequelize.STRING,
       email: { type: Sequelize.STRING, allowNull: false, unique:true },
