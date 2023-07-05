@@ -27,6 +27,9 @@ module.exports = {
       situacao: {
         type: Sequelize.STRING,
       },
+      pagamento: {
+        type: Sequelize.STRING,
+      },
       metodo: {
         type: Sequelize.STRING,
         allowNull: false,

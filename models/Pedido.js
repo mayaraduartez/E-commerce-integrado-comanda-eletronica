@@ -17,6 +17,9 @@ const Pedido = conexao.define(
             type: DataTypes.STRING,
             allowNull: false
         },
+        pagamento: {
+            type: DataTypes.STRING,
+        },
         endereco: {
             type: DataTypes.JSON, // Ou outro tipo adequado para armazenar o objeto de endereço
             allowNull: true // Permitir que o endereço seja nulo caso o método seja "buscar"

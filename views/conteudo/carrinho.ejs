@@ -75,7 +75,6 @@
     </div>
 
     <!-- segunda parte do formulário (método de pagamento) -->
-    <!-- segunda parte do formulário (método de pagamento) -->
     <div class="teste">
       <div
         class="formulario-pagamento"
@@ -91,6 +90,7 @@
                 name="metodo"
                 value="buscar"
                 onclick="exibirEndereco(false)"
+                required 
               />
               Buscar
             </div>
@@ -100,6 +100,7 @@
                 name="metodo"
                 value="delivery"
                 onclick="exibirEndereco(true)"
+                required
               />
               Delivery
             </div>
@@ -153,17 +154,29 @@
                   required
                 />
               </div>
+              <div style="display: flex; flex-direction: column">
+                <h3>Tipo de pagamento:</h3>
+                <div class="radio">
+                  <div class="radio-option">
+                    <input type="radio" name="pagamento" value="cartão" required />
+                    Cartão
+                  </div>
+                  <div class="radio-option">
+                    <input type="radio" name="pagamento" value="dinheiro" required />
+                    Dinheiro
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="btn-box">
           <input
-  type="submit"
-  class="btn btn-success"
-  onclick="return confirmarPedido()"
-  value="Confirmar"
-/>
-
+            type="submit"
+            class="btn btn-success"
+            onclick="return confirmarPedido()"
+            value="Confirmar"
+          />
         </div>
       </div>
     </div>

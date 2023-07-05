@@ -297,6 +297,7 @@ async function removeCarrinho(req, res) {
 async function salvaritens(req, res) {
   try {
     const metodo = req.body.metodo;
+    const pagamento = req.body.pagamento;
     let endereco = {}; // Inicializa o objeto de endereço vazio
 
     if (metodo === "delivery") {
@@ -313,6 +314,7 @@ async function salvaritens(req, res) {
       valortotal: 0.0,
       UsuarioId: req.user.id,
       datapedido: new Date(),
+      pagamento: pagamento,
       metodo: metodo === "buscar" ? "buscar" : metodo,
       endereco: endereco, // Salva o objeto de endereço no atributo "endereco" do modelo PEDIDO
     });
@@ -356,7 +358,6 @@ async function salvaritens(req, res) {
     return res.status(500).json({ error: "Ocorreu um erro ao salvar os itens" });
   }
 }
-
 
 async function pedidos(req, res) {
   const pedidos = await Pedido.findAll({
