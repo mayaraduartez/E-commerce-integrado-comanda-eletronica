@@ -16,6 +16,9 @@ const Cardapio = conexao.define(
     valor: {
       type: DataTypes.FLOAT,
     },
+    promocao: {
+      type: DataTypes.FLOAT,
+    },
     tipo: {
       type: DataTypes.STRING,
     },

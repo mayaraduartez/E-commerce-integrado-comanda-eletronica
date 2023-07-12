@@ -11,12 +11,12 @@
           <div class="card-heading">
             <h2 class="title">Editar no cardápio</h2>
           </div>
-          <div class="card-body">
+          <div class="card-body" style="display:flex; flex-direction: column; align-items: center;">
             <form id="demo-form2" method="post" enctype="multipart/form-data" data-parsley-validate
               class="form-horizontal form-label-left" action="/edtsalvar/<%= Cardapio.id %>">
               <div class="item form-group">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">
-                  <img class="img-circle img-fluid" id="blah" src="images/<%= Cardapio.foto %>"
+                  <img class="img-circle img-fluid" id="blah" src="/images/<%= Cardapio.foto %>"
                     alt="your image" style="max-width: 100%;" />
                 </label>
                 <div class="col-md-9 col-sm-9">
@@ -52,6 +52,20 @@
                 </div>
               </div>
               <div class="form-row">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Promoção?</label>
+                  <div class="col-md-9 col-sm-9">
+                    <input type="radio" name="promocao" value="sim"> Sim
+                    <input type="radio" name="promocao" value="nao"> Não
+
+                  </div>
+              </div>
+              <div class="form-row">
+                <div id="divPromocao" style="display: none;">
+                  <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Valor da promoção</label>
+                  <input type="number" class="textarea--style-6" required="required" name="valorpromocao">
+                </div>
+              </div>
+              <div class="form-row">
                 <label class="col-form-label col-md-3 col-sm-3 label-align" for="last-name">Valor R$
                   <span class="required">*</span>
                 </label>
@@ -59,6 +73,8 @@
                   <input type="number" class="textarea--style-6" required="required" name="valor" value="<%= Cardapio.valor %>">
                 </div>
               </div>
+              </div>
+              
 
               <div class="ln_solid"></div>
               <div class="item form-group">
@@ -98,4 +114,26 @@
     margin: 0;
   }
 </style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var promocaoRadio = document.querySelector('input[name="promocao"]');
+    var divPromocao = document.getElementById('divPromocao');
+    var form = document.getElementById('demo-form2');
+    var enviarButton = document.querySelector('.btn.btn-success');
+
+    promocaoRadio.addEventListener('change', function() {
+      divPromocao.style.display = this.value === 'sim' ? 'block' : 'none';
+    });
+
+    enviarButton.addEventListener('click', function(event) {
+      if (!promocaoRadio.checked) {
+        promocaoRadio.value = 'nao';
+      }
+      form.submit();
+    });
+  });
+</script>
+
+
+
 <%- include('./rodape.ejs') %>

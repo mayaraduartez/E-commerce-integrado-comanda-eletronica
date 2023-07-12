@@ -151,7 +151,7 @@ function enviaremail(usuario, token) {
 
 const logar = passport.authenticate("local", {
   failureRedirect: "/login",
-  successRedirect: "/addmenu",
+  successRedirect: "/abreinicial",
 });
 
 module.exports = {

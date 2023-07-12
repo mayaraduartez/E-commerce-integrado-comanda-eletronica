@@ -208,7 +208,7 @@ async function edtmenu(req, res) {
 async function edtsalvar(req, res) {
   try {
     const id = req.params.id;
-    const { foto, titulo, descricao, tipo, valor } = req.body;
+    const { foto, titulo, descricao, tipo, valor, valorpromocao, promocao } = req.body;
 
     const cardapio = await Cardapio.findOne({
       where: {
@@ -225,15 +225,17 @@ async function edtsalvar(req, res) {
     cardapio.descricao = descricao;
     cardapio.tipo = tipo;
     cardapio.valor = valor;
+    cardapio.promocao = promocao === 'nao' ? null : valorpromocao;
 
     await cardapio.save();
 
-   return res.redirect('/menuadm');
+    return res.redirect('/menuadm');
   } catch (error) {
     console.error('Erro ao atualizar o cardápio:', error);
     return res.status(500).json({ error: 'Ocorreu um erro ao atualizar o cardápio' });
   }
 }
+
 
 async function removemenu(req, res) {
   const itemId = req.params.id;

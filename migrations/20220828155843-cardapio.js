@@ -16,6 +16,7 @@ module.exports = {
       titulo: Sequelize.STRING,
       descricao: Sequelize.STRING,
       valor: Sequelize.FLOAT,
+      promocao: Sequelize.FLOAT,
       tipo: Sequelize.STRING,
     });
   },
