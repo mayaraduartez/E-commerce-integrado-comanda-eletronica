@@ -1,0 +1,71 @@
+<%-include('./cabecalho.ejs')%>
+
+<!-- food section -->
+<section class="food_section layout_padding">
+  <div class="container">
+    <div class="heading_container heading_center">
+      <h2>Pedidos de hoje</h2>
+    </div>
+
+    <ul class="filters_menu">
+      <li data-filter=".estabelecimento">Estabelecimento <span id="totalEstabelecimento"></span></li>
+    </ul>
+
+    <div class="filters-content">
+      <div class="row grid">
+        <% var estabelecimentoCount = 0; %>
+        <% Pedido_Comanda.forEach(function(pedido_comanda){ %>
+          <% if (pedido_comanda.pagamento == null) { %>
+            <% estabelecimentoCount++; %>
+            <div class="col-sm-6 col-lg-4 all estabelecimento">
+              <div>
+                <div class="pedido">
+                  <h5 class="data-pedido"><%= pedido_comanda.datapedido %></h5>
+                  <h5 class="data-pedido">Mesa: <%= pedido_comanda.mesa %></h5>
+                  <div class="valor-pedido">
+                    <h6 class="valor total">
+                      Total R$: <%= pedido_comanda.valortotal %> <br />
+                    </h6>
+                    <p class="item-pedido">
+                      <% pedido_comanda.Comandas.forEach(function(comanda){ %>
+                        <%= comanda.quantidade %> x <%= comanda.Cardapio.titulo %>
+                        <br />
+                      <% }) %>
+                    </p>
+                    
+                    <form id="paymentForm" action="/salvarpagamento/<%= pedido_comanda.id %>" method="POST">
+
+                        <div class="form-pag" style="display:flex" >
+                      <label for="cartao">Cartão</label>
+                      <input type="radio" id="cartao" name="pagamento" value="Cartão">
+
+                      <label for="dinheiro">Dinheiro</label>
+                      <input type="radio" id="dinheiro" name="pagamento" value="Dinheiro">
+
+                      <label for="pix">Pix</label>
+                      <input type="radio" id="pix" name="pagamento" value="Pix">
+                    </div>
+                      <button type="submit" style="border-radius: 6px; background-color: #28a745; border-color: #28a745">Salvar</button>
+                    </form>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        <% }) %>
+
+        <script>
+          document.getElementById("totalEstabelecimento").innerText = "(Total: <%= estabelecimentoCount %>)";
+        </script>
+      </div>
+    </div>
+    <div class="btn-box">
+      <a href=""> Inicio </a>
+    </div>
+  </div>
+</section>
+<!-- end food section -->
+
+
+<%-include('./rodape.ejs')%>

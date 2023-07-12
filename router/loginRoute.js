@@ -144,6 +144,13 @@ principalController.salvarcomanda);
 router.get('/pedidoscozinha',
 principalController.pedidoscozinha);
 
+router.get('/sistemadepagamento',
+autenticacaoadmin,
+principalController.abrirsistema);
+
+router.post('/salvarpagamento/:id',
+principalController.updatepagamento);
+
 router.post('/admsair', 
 principalController.admsair);
 

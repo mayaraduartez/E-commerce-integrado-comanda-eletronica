@@ -576,6 +576,44 @@ async function updatesituacao(req,res){
   }
 } 
 
+async function abrirsistema(req,res){
+  const pedidos_comanda = await Pedido_Comanda.findAll({
+    include: [
+      {
+        model: Comanda,
+        include: [
+          {
+            model: Cardapio,
+          },
+        ],
+      },
+    ],
+    order: [["id", "DESC"]], 
+  });
+  res.render("admin/caixa.ejs", {Pedido_Comanda: pedidos_comanda });
+}
+
+async function updatepagamento(req,res){
+  const idpedido = req.params.id;
+  const pagamento = req.body.pagamento;
+
+  const pedido_comanda = await Pedido_Comanda.findOne({
+    where: {
+      id: idpedido,
+    },
+  });
+
+  if (!pedido_comanda) {
+    return res.status(404).json({ error: 'Pedido não encontrado' });
+  }
+
+  pedido_comanda.pagamento = pagamento; // Atualize a situação do pedido para "pronto"
+  await pedido_comanda.save();
+
+  return res.redirect('/sistemadepagamento');
+
+}
+
 module.exports = {
   principal,
   abreinicial,
@@ -609,4 +647,6 @@ module.exports = {
   pedidoscozinha,
   updatesituacaodelivery,
   updatesituacao,
+  abrirsistema,
+  updatepagamento,
 };

@@ -10,6 +10,9 @@ const Pedido_Comanda = conexao.define(
         situacao: {
             type: DataTypes.STRING,
         },
+        pagamento:{
+            type: DataTypes.STRING,
+        },
         valortotal: {
             type: DataTypes.FLOAT,
         },

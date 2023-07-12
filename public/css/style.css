@@ -1582,7 +1582,8 @@ th {
 
 label {
   display: inline-block;
-  margin-bottom: 0.5rem;
+   margin-left: 10px;
+    margin-right: 7px;
 }
 
 button {
