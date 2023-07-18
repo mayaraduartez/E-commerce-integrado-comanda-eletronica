@@ -158,11 +158,11 @@
                 <h3>Tipo de pagamento:</h3>
                 <div class="radio">
                   <div class="radio-option">
-                    <input type="radio" name="pagamento" value="cartão" required />
+                    <input type="radio" id="inputCartao" name="pagamento" value="cartão" required />
                     Cartão
                   </div>
                   <div class="radio-option">
-                    <input type="radio" name="pagamento" value="dinheiro" required />
+                    <input type="radio" id="inputDinheiro" name="pagamento" value="dinheiro" required />
                     Dinheiro
                   </div>
                 </div>
@@ -174,7 +174,7 @@
           <input
             type="submit"
             class="btn btn-success"
-            onclick="return confirmarPedido()"
+            
             value="Confirmar"
           />
         </div>
@@ -232,6 +232,34 @@
     font-size: 18px;
   }
 </style>
+<script>
+  function toggleRequired() {
+    var option = document.querySelector('input[name="metodo"]:checked').value;
+    var inputRua = document.getElementById("inputRua");
+    var inputBairro = document.getElementById("inputBairro");
+    var inputNumero = document.getElementById("inputNumero");
+    var inputTelefone = document.getElementById("inputTelefone");
+    var inputCartao = document.getElementById("inputCartao");
+    var inputDinheiro = document.getElementById("inputDinheiro");
+
+    if (option === "buscar") {
+      inputRua.removeAttribute("required");
+      inputBairro.removeAttribute("required");
+      inputNumero.removeAttribute("required");
+      inputTelefone.removeAttribute("required");
+      inputCartao.removeAttribute("required");
+      inputDinheiro.removeAttribute("required");
+    } else {
+      inputRua.setAttribute("required", "required");
+      inputBairro.setAttribute("required", "required");
+      inputNumero.setAttribute("required", "required");
+      inputTelefone.setAttribute("required", "required");
+      inputCartao.setAttribute("required", "required");
+      inputDinheiro.setAttribute("required", "required");
+    }
+  }
+</script>
+
 
 <script>
   function exibirFormularioPagamento() {
@@ -242,6 +270,8 @@
     document.getElementById("enderecoEntrega").style.display = exibir
       ? "block"
       : "none";
+    
+      toggleRequired();
   }
 
   function confirmarPedido() {
